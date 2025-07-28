@@ -7,7 +7,7 @@
  *
  * 扩展规则：
  *   1. 前16个字直接取自输入消息块
- *   2. 后48个字通过扩展算法生成：Wt = σ1(Wt-2) + Wt-7 + σ0(Wt-15) + Wt-16
+ *   2. 后48个字通过扩展算法生成：W[t] = σ1(W[t-2]) + W[t-7] + σ0(W[t-15]) + W[t-16]
  */
 
 module expansion (
@@ -24,7 +24,7 @@ module expansion (
   // =============================================
   reg [31:0] W                                     [0:63];  // 消息调度数组
   reg [31:0] stage_reg                             [0:15];  // 16级流水线寄存器
-  reg [ 5:0] t_counter;  // 扩展计数器 (0-63)
+  reg [ 6:0] t_counter;  // 扩展计数器 (0-63)
   reg        active;  // 扩展过程激活标志
 
   // =============================================
@@ -46,8 +46,8 @@ module expansion (
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       // 复位所有寄存器
-      for (int i = 0; i < 64; i++) W[i] <= 0;
-      for (int i = 0; i < 16; i++) stage_reg[i] <= 0;
+      for (integer i = 0; i < 64; i++) W[i] <= 0;
+      for (integer i = 0; i < 16; i++) stage_reg[i] <= 0;
       t_counter <= 0;
       active <= 0;
       Wt_out <= 0;
@@ -58,32 +58,36 @@ module expansion (
 
       if (block_valid && !active) begin
         // 新块到达，初始化前16个字
-        for (int t = 0; t < 16; t++) begin
+        for (integer t = 0; t < 16; t++) begin
           W[t] <= block_in[511-32*t-:32];
+          stage_reg[t] <= 32'hFFFFFFFF;
         end
         t_counter <= 16;  // 从第16个字开始扩展
         active <= 1;
-        Wt_out <= W[0];  // 输出第一个字
-        Wt_valid <= 1;
       end else if (active) begin
         // 扩展处理阶段
-        if (t_counter < 64) begin
+        if (t_counter < 96) begin
           // 计算新的Wt
-          W[t_counter] <= sigma1(
-              W[t_counter-2]
-          ) + W[t_counter-7] + sigma0(
-              W[t_counter-15]
-          ) + W[t_counter-16];
+          if (t_counter < 64) begin
+            W[t_counter] <= sigma1(W[t_counter-2]) + W[t_counter-7] + sigma0(W[t_counter-15]) +
+                W[t_counter-16];
+          end
 
           // 更新流水线寄存器
-          for (int i = 0; i < 15; i++) begin
+          for (integer i = 0; i < 15; i++) begin
             stage_reg[i] <= stage_reg[i+1];
           end
-          stage_reg[15] <= W[t_counter-16];  // 延迟16周期
+          if (t_counter < 80) begin
+            stage_reg[15] <= W[t_counter-16];  // 延迟16周期
+          end else begin
+            stage_reg[15] <= 0;  // 超出范围时清零
+          end
 
-          // 输出当前Wt (延迟16周期)
-          Wt_out <= stage_reg[0];
-          Wt_valid <= 1;
+          // 输出当前Wt
+          if (t_counter >= 32) begin
+            Wt_out   <= stage_reg[0];
+            Wt_valid <= 1;
+          end
 
           t_counter <= t_counter + 1;
         end else begin
