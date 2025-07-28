@@ -14,7 +14,7 @@ module padding_tb ();
   // 模块输出
   wire [511:0] data_out;
   wire data_out_valid;
-  wire ready;
+  wire data_ready;
 
   // 实例化被测模块
   padding uut (
@@ -25,7 +25,7 @@ module padding_tb ();
       .data_last(data_last),
       .data_out(data_out),
       .data_out_valid(data_out_valid),
-      .ready(ready)
+      .data_ready(data_ready)
   );
 
   // 时钟生成（周期10ns）
@@ -54,7 +54,7 @@ module padding_tb ();
     #10;
 
     // 等待模块就绪
-    wait (ready);
+    wait (data_ready);
     @(posedge clk);
 
     // 发送消息序列
@@ -114,7 +114,7 @@ module padding_tb ();
     #10;
 
     // 等待模块就绪
-    wait (ready);
+    wait (data_ready);
     @(posedge clk);
 
     // 发送空消息（仅last信号）
@@ -160,7 +160,7 @@ module padding_tb ();
     #10;
 
     // 等待模块就绪
-    wait (ready);
+    wait (data_ready);
     @(posedge clk);
 
     // 发送单字节消息 "A"
@@ -213,7 +213,7 @@ module padding_tb ();
     #10;
 
     // 等待模块就绪
-    wait (ready);
+    wait (data_ready);
     @(posedge clk);
 
     // 发送55字节消息 (全部发送0xAA作为测试数据)
@@ -266,7 +266,7 @@ module padding_tb ();
     #10;
 
     // 等待模块就绪
-    wait (ready);
+    wait (data_ready);
     @(posedge clk);
 
     // 发送56字节消息 (全部发送0xBB作为测试数据)

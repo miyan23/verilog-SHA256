@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module expansion_tb ();
+module expand_tb ();
 
   // 时钟和复位信号
   reg clk;
@@ -26,7 +26,7 @@ module expansion_tb ();
   integer block2_count;
 
   // 实例化被测模块
-  expansion uut (
+  expand uut (
       .clk(clk),
       .rst_n(rst_n),
       .block_in(block_in),
@@ -91,7 +91,7 @@ module expansion_tb ();
     // =============================================
     // 测试用例2：扩展功能测试 - 验证后48个字的生成
     // =============================================
-    $display("\n[TEST CASE 2] Expansion test - verify words 16-63");
+    $display("\n[TEST CASE 2] Expand test - verify words 16-63");
 
     // 等待当前扩展完成
     while (Wt_valid) @(posedge clk);
@@ -150,60 +150,60 @@ module expansion_tb ();
     // =============================================
     // 测试用例3：流水线功能测试 - 验证连续块处理
     // =============================================
-    // $display("\n[TEST CASE 3] Pipeline test - verify continuous block processing");
+    $display("\n[TEST CASE 3] Pipeline test - verify continuous block processing");
 
-    // // 发送第一个块
-    // @(posedge clk);
-    // block_valid = 1;
-    // block_in = 512'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f;
-    // @(posedge clk);
-    // block_valid = 0;
+    // 发送第一个块
+    @(posedge clk);
+    block_valid = 1;
+    block_in = 512'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f;
+    @(posedge clk);
+    block_valid = 0;
 
-    // // 在第一个块处理过程中发送第二个块
-    // #100;  // 等待部分处理完成
-    // @(posedge clk);
-    // block_valid = 1;
-    // block_in = 512'h404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f;
-    // @(posedge clk);
-    // block_valid  = 0;
+    // 在第一个块处理过程中发送第二个块
+    #100;  // 等待部分处理完成
+    @(posedge clk);
+    block_valid = 1;
+    block_in = 512'h404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f;
+    @(posedge clk);
+    block_valid  = 0;
 
-    // block1_count = 0;
-    // while (block1_count < 64) begin
-    //   if (Wt_valid) begin
-    //     $display("Block1 W[%0d] = %h", block1_count, Wt_out);
-    //     block1_count = block1_count + 1;
-    //   end
-    //   @(posedge clk);
-    // end
+    block1_count = 0;
+    while (block1_count < 64) begin
+      if (Wt_valid) begin
+        $display("Block1 W[%0d] = %h", block1_count, Wt_out);
+        block1_count = block1_count + 1;
+      end
+      @(posedge clk);
+    end
 
-    // block2_count = 0;
-    // while (block2_count < 64) begin
-    //   if (Wt_valid) begin
-    //     $display("Block2 W[%0d] = %h", block2_count, Wt_out);
-    //     block2_count = block2_count + 1;
-    //   end
-    //   @(posedge clk);
-    // end
+    block2_count = 0;
+    while (block2_count < 64) begin
+      if (Wt_valid) begin
+        $display("Block2 W[%0d] = %h", block2_count, Wt_out);
+        block2_count = block2_count + 1;
+      end
+      @(posedge clk);
+    end
 
-    // // 验证第二个块的第一个字是否正确
-    // if (Wt_out === 32'h40414243) begin
-    //   $display("[RESULT] PASS: Second block processing started correctly");
-    // end else begin
-    //   $display("[RESULT] FAIL: Second block first word expected 40414243, got %h", Wt_out);
-    // end
+    // 验证第二个块的最后一个字是否正确
+    if (Wt_out === 32'hf70b0ebe) begin
+      $display("[RESULT] PASS: Second block processing finished correctly");
+    end else begin
+      $display("[RESULT] FAIL: Second block last word expected f70b0ebe, got %h", Wt_out);
+    end
 
     // =============================================
     // 结束仿真
     // =============================================
-    #1000;
+    #100;
     $display("\n[SIMULATION FINISHED]");
     $finish;
   end
 
   // 波形转储
   initial begin
-    $dumpfile("expansion.vcd");
-    $dumpvars(0, expansion_tb);
+    $dumpfile("expand.vcd");
+    $dumpvars(0, expand_tb);
   end
 
 endmodule
