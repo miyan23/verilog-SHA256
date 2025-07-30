@@ -1,5 +1,5 @@
 /*
- * 模块名称：expansion
+ * 模块名称：expand
  *
  * 功能描述：
  *   本模块用于对输入的512位消息块进行SHA-256算法所需的消息扩展。
@@ -24,7 +24,7 @@ module expand (
   // 内部信号定义
   // =============================================
   reg [ 31:0] W                                           [0:63];  // 消息调度数组
-  reg [ 31:0] pipeline                                    [0:15];  // 16级流水线寄存器
+  reg [ 31:0] pipeline_reg                                    [0:15];  // 16级流水线寄存器
   reg [  6:0] expand_counter;  // 扩展计数器 (0-63)
   reg         expand_active;  // 扩展过程激活标志
   reg [511:0] buffer_block;  // 输入块缓存
@@ -50,7 +50,7 @@ module expand (
     if (!rst_n) begin
       // 复位所有寄存器
       for (integer i = 0; i < 64; i++) W[i] <= 0;
-      for (integer i = 0; i < 16; i++) pipeline[i] <= 0;
+      for (integer i = 0; i < 16; i++) pipeline_reg[i] <= 0;
       expand_counter <= 0;
       expand_active  <= 0;
       Wt_out         <= 0;
@@ -70,7 +70,7 @@ module expand (
           // 当前无处理块，直接处理新块
           for (integer t = 0; t < 16; t++) begin
             W[t]        <= block_in[511-32*t-:32];
-            pipeline[t] <= 32'hFFFFFFFF;
+            pipeline_reg[t] <= 32'hFFFFFFFF;
           end
           expand_counter <= 16;
           expand_active  <= 1;
@@ -94,18 +94,18 @@ module expand (
 
           // 更新流水线寄存器
           for (integer i = 0; i < 15; i++) begin
-            pipeline[i] <= pipeline[i+1];
+            pipeline_reg[i] <= pipeline_reg[i+1];
           end
 
           if (expand_counter < 80) begin
-            pipeline[15] <= W[expand_counter-16];  // 延迟16周期
+            pipeline_reg[15] <= W[expand_counter-16];  // 延迟16周期
           end else begin
-            pipeline[15] <= 0;  // 超出范围时清零
+            pipeline_reg[15] <= 0;  // 超出范围时清零
           end
 
           // 输出当前Wt
           if (expand_counter >= 32) begin
-            Wt_out   <= pipeline[0];
+            Wt_out   <= pipeline_reg[0];
             Wt_valid <= 1;
           end
 
@@ -120,7 +120,7 @@ module expand (
           if (buffer_valid) begin
             for (integer t = 0; t < 16; t++) begin
               W[t]        <= buffer_block[511-32*t-:32];
-              pipeline[t] <= 32'hFFFFFFFF;
+              pipeline_reg[t] <= 32'hFFFFFFFF;
             end
             expand_counter <= 16;
             expand_active  <= 1;
