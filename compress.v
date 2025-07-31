@@ -140,10 +140,8 @@ module compress (
   // =============================================
   // 中间计算信号
   // =============================================
-  wire [31:0] T1 = h[0] + SIGMA1(e[0]) + Ch(e[0], f[0], g[0]) + K[wt_counter] + Wt_in;
-  wire [31:0] T2 = SIGMA0(a[0]) + Maj(a[0], b[0], c[0]);
-  wire [31:0] new_a = T1 + T2;
-  wire [31:0] new_e = d[0] + T1;
+  reg [31:0] a0, b0, c0, d0, e0, f0, g0, h0;
+  reg [31:0] T1, T2;
 
   // =============================================
   // 主压缩逻辑
@@ -168,12 +166,6 @@ module compress (
       hash_out       <= 0;
       hash_out_valid <= 0;
     end else begin
-
-      // $display(
-      //     "Wt_valid: %b, zip_active: %b, wt_counter: %d, output_stage: %b, hash_out_valid: %b, a[0]: %h, b[0]: %h, c[0]: %h, d[0]: %h, e[0]: %h, f[0]: %h, g[0]: %h, h[0]: %h",
-      //     Wt_valid, zip_active, wt_counter, output_stage, hash_out_valid, a[0], b[0], c[0], d[0],
-      //     e[0], f[0], g[0], h[0]);
-
       // 默认输出无效
       hash_out_valid <= 0;
 
@@ -181,15 +173,26 @@ module compress (
       // 压缩过程初始化
       // ------------------------------
       if (Wt_valid && !zip_active) begin
-        // 初始化工作变量
-        a[0] <= hash_in[255:224];
-        b[0] <= hash_in[223:192];
-        c[0] <= hash_in[191:160];
-        d[0] <= hash_in[159:128];
-        e[0] <= hash_in[127:96];
-        f[0] <= hash_in[95:64];
-        g[0] <= hash_in[63:32];
-        h[0] <= hash_in[31:0];
+        // 处理第一个Wt
+        a0 = hash_in[255:224];
+        b0 = hash_in[223:192];
+        c0 = hash_in[191:160];
+        d0 = hash_in[159:128];
+        e0 = hash_in[127:96];
+        f0 = hash_in[95:64];
+        g0 = hash_in[63:32];
+        h0 = hash_in[31:0];
+        T1 = h0 + SIGMA1(e0) + Ch(e0, f0, g0) + K[0] + Wt_in;
+        T2 = SIGMA0(a0) + Maj(a0, b0, c0);
+
+        a[0] <= T1 + T2;
+        b[0] <= a0;
+        c[0] <= b0;
+        d[0] <= c0;
+        e[0] <= d0 + T1;
+        f[0] <= e0;
+        g[0] <= f0;
+        h[0] <= g0;
 
         // 初始化其他寄存器
         for (integer i = 1; i < 32; i++) begin
@@ -203,16 +206,6 @@ module compress (
           h[i] <= 0;
         end
 
-        // 立即用当前Wt值进行第一轮压缩
-        a[0]       <= new_a;
-        b[0]       <= hash_in[255:224];
-        c[0]       <= hash_in[223:192];
-        d[0]       <= hash_in[191:160];
-        e[0]       <= new_e;
-        f[0]       <= hash_in[127:96];
-        g[0]       <= hash_in[95:64];
-        h[0]       <= hash_in[63:32];
-
         hash_reg   <= hash_in;
         zip_active <= 1;
         wt_counter <= 0;
@@ -222,6 +215,15 @@ module compress (
       // 压缩处理阶段
       // ------------------------------
       if (Wt_valid && zip_active) begin
+        a0 = a[0];
+        b0 = b[0];
+        c0 = c[0];
+        d0 = d[0];
+        e0 = e[0];
+        f0 = f[0];
+        g0 = g[0];
+        h0 = h[0];
+
         // 更新流水线寄存器 - 右移
         for (integer i = 31; i > 0; i--) begin
           a[i] <= a[i-1];
@@ -235,19 +237,24 @@ module compress (
         end
 
         // 计算新的工作变量并存入第0级
-        a[0] <= new_a;
-        b[0] <= a[0];
-        c[0] <= b[0];
-        d[0] <= c[0];
-        e[0] <= new_e;
-        f[0] <= e[0];
-        g[0] <= f[0];
-        h[0] <= g[0];
+        T1 = h0 + SIGMA1(e0) + Ch(e0, f0, g0) + K[wt_counter+1] + Wt_in;
+        T2 = SIGMA0(a0) + Maj(a0, b0, c0);
+        a[0] <= T1 + T2;
+        b[0] <= a0;
+        c[0] <= b0;
+        d[0] <= c0;
+        e[0] <= d0 + T1;
+        f[0] <= e0;
+        g[0] <= f0;
+        h[0] <= g0;
 
         // 更新计数器
         wt_counter <= wt_counter + 1;
       end
 
+      // ------------------------------
+      // 64个Wt处理完毕后，结束压缩过程
+      // ------------------------------
       if (zip_active && wt_counter == 63) begin
         zip_active   <= 0;
         wt_counter   <= 0;
