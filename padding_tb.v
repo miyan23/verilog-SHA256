@@ -911,6 +911,59 @@ module padding_tb ();
     end
 
     // =============================================
+    // 测试用例7：1000字节消息测试 (需要十六块)
+    // =============================================
+    $display("\n[TEST CASE 7] Testing 1000-byte message");
+
+    // 重新初始化
+    #20;
+    rst_n = 0;
+    data_in = 0;
+    data_in_valid = 0;
+    data_last = 0;
+    #10;
+
+    // 释放复位
+    rst_n = 1;
+    #10;
+
+    // 等待模块就绪
+    wait (data_ready);
+    @(posedge clk);
+
+    // 发送1000字节消息（"a"*1000）
+    for (integer i = 0; i < 1000; i = i + 1) begin
+      data_in = "a";
+      data_in_valid = 1;
+      data_last = (i == 999);
+      @(posedge clk);
+    end
+
+    // 结束输入
+    data_in_valid = 0;
+    data_last = 0;
+
+    // 验证第十六个块
+    wait (data_out_valid);
+    if (data_out === 512'h61616161616161616161616161616161616161616161616161616161616161616161616161616161800000000000000000000000000000000000000000001f40) begin
+      $display("\nPadded block:");
+      $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+               data_out[415:384]);
+      $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+               data_out[287:256]);
+      $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+               data_out[159:128]);
+      $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
+
+      $display("[RESULT] PASS: 1000-byte message padded correctly in 16 block");
+    end else begin
+      $display("[RESULT] FAIL: Padding error");
+      $display(
+          "Expected: 61616161616161616161616161616161616161616161616161616161616161616161616161616161800000000000000000000000000000000000000000001f40");
+      $display("Received: %h", data_out);
+    end
+
+    // =============================================
     // 结束仿真
     // =============================================
     #100;
