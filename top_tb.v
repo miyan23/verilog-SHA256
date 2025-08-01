@@ -17,7 +17,7 @@ module top_tb ();
   wire            data_ready;
 
   // 测试向量
-  reg     [  7:0] test_message                     [0:63];  // 测试消息存储
+  reg     [  7:0] test_message                     [0:511];  // 测试消息存储
   integer         message_length;  // 消息长度
   integer         i;  // 循环计数器
 
@@ -262,53 +262,176 @@ module top_tb ();
     end
 
     // =============================================
-    // 测试用例3：长消息测试 (56字节，需要两个块)
+    // 测试用例4：基本功能测试 - "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
     // =============================================
-    // $display("\n[TEST CASE 3] Testing long message (56 bytes)");
+    $display(
+        "\n[TEST CASE 4] Testing 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu' message (standard test vector)");
 
-    // // 准备长测试消息 (56字节)
-    // for (i = 0; i < 56; i = i + 1) begin
-    //   test_message[i] = i + 8'h41;  // A, B, C, ..., etc.
-    // end
-    // message_length = 56;
+    // 测试用例4："abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
+    test_message[0] = "a";
+    test_message[1] = "b";
+    test_message[2] = "c";
+    test_message[3] = "d";
+    test_message[4] = "e";
+    test_message[5] = "f";
+    test_message[6] = "g";
+    test_message[7] = "h";
+    test_message[8] = "b";
+    test_message[9] = "c";
+    test_message[10] = "d";
+    test_message[11] = "e";
+    test_message[12] = "f";
+    test_message[13] = "g";
+    test_message[14] = "h";
+    test_message[15] = "i";
+    test_message[16] = "c";
+    test_message[17] = "d";
+    test_message[18] = "e";
+    test_message[19] = "f";
+    test_message[20] = "g";
+    test_message[21] = "h";
+    test_message[22] = "i";
+    test_message[23] = "j";
+    test_message[24] = "d";
+    test_message[25] = "e";
+    test_message[26] = "f";
+    test_message[27] = "g";
+    test_message[28] = "h";
+    test_message[29] = "i";
+    test_message[30] = "j";
+    test_message[31] = "k";
+    test_message[32] = "e";
+    test_message[33] = "f";
+    test_message[34] = "g";
+    test_message[35] = "h";
+    test_message[36] = "i";
+    test_message[37] = "j";
+    test_message[38] = "k";
+    test_message[39] = "l";
+    test_message[40] = "f";
+    test_message[41] = "g";
+    test_message[42] = "h";
+    test_message[43] = "i";
+    test_message[44] = "j";
+    test_message[45] = "k";
+    test_message[46] = "l";
+    test_message[47] = "m";
+    test_message[48] = "g";
+    test_message[49] = "h";
+    test_message[50] = "i";
+    test_message[51] = "j";
+    test_message[52] = "k";
+    test_message[53] = "l";
+    test_message[54] = "m";
+    test_message[55] = "n";
+    test_message[56] = "h";
+    test_message[57] = "i";
+    test_message[58] = "j";
+    test_message[59] = "k";
+    test_message[60] = "l";
+    test_message[61] = "m";
+    test_message[62] = "n";
+    test_message[63] = "o";
+    test_message[64] = "i";
+    test_message[65] = "j";
+    test_message[66] = "k";
+    test_message[67] = "l";
+    test_message[68] = "m";
+    test_message[69] = "n";
+    test_message[70] = "o";
+    test_message[71] = "p";
+    test_message[72] = "j";
+    test_message[73] = "k";
+    test_message[74] = "l";
+    test_message[75] = "m";
+    test_message[76] = "n";
+    test_message[77] = "o";
+    test_message[78] = "p";
+    test_message[79] = "q";
+    test_message[80] = "k";
+    test_message[81] = "l";
+    test_message[82] = "m";
+    test_message[83] = "n";
+    test_message[84] = "o";
+    test_message[85] = "p";
+    test_message[86] = "q";
+    test_message[87] = "r";
+    test_message[88] = "l";
+    test_message[89] = "m";
+    test_message[90] = "n";
+    test_message[91] = "o";
+    test_message[92] = "p";
+    test_message[93] = "q";
+    test_message[94] = "r";
+    test_message[95] = "s";
+    test_message[96] = "m";
+    test_message[97] = "n";
+    test_message[98] = "o";
+    test_message[99] = "p";
+    test_message[100] = "q";
+    test_message[101] = "r";
+    test_message[102] = "s";
+    test_message[103] = "t";
+    test_message[104] = "n";
+    test_message[105] = "o";
+    test_message[106] = "p";
+    test_message[107] = "q";
+    test_message[108] = "r";
+    test_message[109] = "s";
+    test_message[110] = "t";
+    test_message[111] = "u";
+    message_length = 112;
 
-    // // 重新初始化
-    // #20;
-    // rst_n = 0;
-    // data_in = 0;
-    // data_in_valid = 0;
-    // data_last = 0;
-    // #10;
+    // 初始化
+    #20;
+    rst_n = 0;
+    data_in = 0;
+    data_in_valid = 0;
+    data_last = 0;
+    #10;
 
-    // // 释放复位
-    // rst_n = 1;
-    // #10;
+    // 释放复位
+    rst_n = 1;
+    #10;
 
-    // // 等待模块就绪
-    // wait (data_ready);
-    // @(posedge clk);
+    // 等待模块就绪
+    wait (data_ready);
+    @(posedge clk);
 
-    // // 发送长消息
-    // for (i = 0; i < message_length; i = i + 1) begin
-    //   data_in = test_message[i];
-    //   data_in_valid = 1;
-    //   data_last = (i == message_length - 1);
-    //   @(posedge clk);
-    // end
+    // 发送消息
+    for (i = 0; i < message_length; i = i + 1) begin
+      data_in = test_message[i];
+      data_in_valid = 1;
+      data_last = (i == message_length - 1);
+      @(posedge clk);
+    end
 
-    // // 结束输入
-    // data_in_valid = 0;
-    // data_last = 0;
+    // 结束输入
+    data_in_valid = 0;
+    data_last = 0;
 
-    // // 等待哈希输出
-    // wait (hash_out_valid);
-    // #0.1;
+    // 等待哈希输出————验证第二个哈希输出
+    wait (hash_out_valid);
+    @(negedge hash_out_valid);
+    wait (hash_out_valid);
+    #0.1;
 
-    // // 显示结果
-    // $display("\nFinal hash:");
-    // $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-    //          hash_out[159:128]);
-    // $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    // 显示结果
+    $display("Final hash:");
+    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
+             hash_out[159:128]);
+    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+
+    // 验证结果
+    if (hash_out === 256'hcf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1) begin
+      $display(
+          "[RESULT] PASS: Hash matches expected value for 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu'");
+    end else begin
+      $display(
+          "[RESULT] FAIL: Hash mismatch for 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu'");
+      $display("Expected: cf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1");
+      $display("Received: %h", hash_out);
+    end
 
     // =============================================
     // 测试用例4：背压测试 (data_ready信号)

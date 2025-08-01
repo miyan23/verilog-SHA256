@@ -75,16 +75,19 @@ module padding_tb ();
 
     // 结束输入
     data_in_valid = 0;
-    data_last  = 0;
+    data_last = 0;
 
     // 等待填充完成
     wait (data_out_valid);
 
     // 显示结果
     $display("\nPadded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
+    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+             data_out[415:384]);
+    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+             data_out[287:256]);
+    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+             data_out[159:128]);
     $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
 
     // 验证结果
@@ -119,7 +122,7 @@ module padding_tb ();
 
     // 发送空消息（仅last信号）
     data_in_valid = 0;
-    data_last  = 1;
+    data_last = 1;
     @(posedge clk);
     data_last = 0;
 
@@ -128,9 +131,12 @@ module padding_tb ();
 
     // 显示结果
     $display("\nPadded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
+    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+             data_out[415:384]);
+    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+             data_out[287:256]);
+    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+             data_out[159:128]);
     $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
 
     // 验证结果
@@ -171,16 +177,19 @@ module padding_tb ();
 
     // 结束输入
     data_in_valid = 0;
-    data_last  = 0;
+    data_last = 0;
 
     // 等待填充完成
     wait (data_out_valid);
 
     // 显示结果
     $display("\nPadded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
+    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+             data_out[415:384]);
+    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+             data_out[287:256]);
+    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+             data_out[159:128]);
     $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
 
     // 验证结果 (单字节'A'=0x41, 长度8位)
@@ -226,16 +235,19 @@ module padding_tb ();
 
     // 结束输入
     data_in_valid = 0;
-    data_last  = 0;
+    data_last = 0;
 
     // 等待填充完成
     wait (data_out_valid);
 
     // 显示填充结果
     $display("\nPadded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
+    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+             data_out[415:384]);
+    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+             data_out[287:256]);
+    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+             data_out[159:128]);
     $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
 
     // 验证结果
@@ -249,9 +261,9 @@ module padding_tb ();
     end
 
     // =============================================
-    // 测试用例5：56字节消息测试 (需要两个块)
+    // 测试用例5：448比特-56字节消息测试 (刚好一个块不够)
     // =============================================
-    $display("\n[TEST CASE 5] Testing 56-byte message");
+    $display("\n[TEST CASE 5] Testing 448-bit message");
 
     // 重新初始化
     #20;
@@ -269,57 +281,632 @@ module padding_tb ();
     wait (data_ready);
     @(posedge clk);
 
-    // 发送56字节消息 (全部发送0xBB作为测试数据)
-    for (integer i = 0; i < 56; i = i + 1) begin
-      data_in = 8'hBB;  // 测试数据
-      data_in_valid = 1;
-      data_last = (i == 55);  // 最后一个字节设置msg_last
-      @(posedge clk);
-    end
+    // 发送448比特（56字节）消息（abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq）
+    data_in = "a";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "b";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "b";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "q";
+    data_in_valid = 1;
+    data_last = 1;
+    @(posedge clk);
 
     // 结束输入
     data_in_valid = 0;
-    data_last  = 0;
-
-    // 等待第一个填充块完成
-    wait (data_out_valid);
-
-    // 显示第一个填充块
-    $display("\nFirst padded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
-    $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
+    data_last = 0;
 
     // 验证第一个块
-    // 预期格式：56个BB + 80 + 7个00
-    if (data_out === 512'hbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb8000000000000000) begin
-      $display("[RESULT] PASS: First block of 56-byte message padded correctly");
+    wait (data_out_valid);
+    if (data_out === 512'h6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f70718000000000000000) begin
+      $display("\nPadded block:");
+      $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+               data_out[415:384]);
+      $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+               data_out[287:256]);
+      $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+               data_out[159:128]);
+      $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
+
+      $display("[RESULT] PASS: 56-byte message padded correctly in first block");
     end else begin
-      $display("[RESULT] FAIL: First block padding error");
-      $display("Expected: 56*BB + 80 + 7*00");
+      $display("[RESULT] FAIL: Padding error");
+      $display(
+          "Expected: 6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f70718000000000000000");
       $display("Received: %h", data_out);
     end
 
-    // 等待第一个块的valid信号变低
+    // 验证第二个块
     @(negedge data_out_valid);
-    // 等待第二个填充块完成
     wait (data_out_valid);
+    if (data_out === 512'h000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c0) begin
+      $display("\nPadded block:");
+      $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+               data_out[415:384]);
+      $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+               data_out[287:256]);
+      $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+               data_out[159:128]);
+      $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
 
-    // 显示第二个填充块
-    $display("\nSecond padded block (hexadecimal):");
-    $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416], data_out[415:384]);
-    $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288], data_out[287:256]);
-    $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160], data_out[159:128]);
-    $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
+      $display("[RESULT] PASS: 56-byte message padded correctly in second block");
+    end else begin
+      $display("[RESULT] FAIL: Padding error");
+      $display(
+          "Expected: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c0");
+      $display("Received: %h", data_out);
+    end
+
+    // =============================================
+    // 测试用例6：896bit消息测试 (需要两个块)
+    // =============================================
+    $display("\n[TEST CASE 6] Testing 896-bit message");
+
+    // 重新初始化
+    #20;
+    rst_n = 0;
+    data_in = 0;
+    data_in_valid = 0;
+    data_last = 0;
+    #10;
+
+    // 释放复位
+    rst_n = 1;
+    #10;
+
+    // 等待模块就绪
+    wait (data_ready);
+    @(posedge clk);
+
+    // 发送896比特（112字节）消息（abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu）
+    data_in = "a";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "b";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "b";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "c";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "d";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "e";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "f";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "g";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "h";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "i";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "j";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "q";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "k";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "q";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "r";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "l";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "q";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "r";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "s";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "m";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "q";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "r";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "s";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "t";
+    data_in_valid = 1;
+    @(posedge clk);
+
+    data_in = "n";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "o";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "p";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "q";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "r";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "s";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "t";
+    data_in_valid = 1;
+    @(posedge clk);
+    data_in = "u";
+    data_in_valid = 1;
+    data_last = 1;
+    @(posedge clk);
+
+    // 结束输入
+    data_in_valid = 0;
+    data_last = 0;
 
     // 验证第二个块
-    // 预期格式：448位0 + 64位长度(0x00000000000001C0)    
-    if (data_out === 512'h000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c0) begin
-      $display("[RESULT] PASS: Second block of 56-byte message padded correctly");
+    wait (data_out_valid);
+    if (data_out === 512'h696a6b6c6d6e6f706a6b6c6d6e6f70716b6c6d6e6f7071726c6d6e6f707172736d6e6f70717273746e6f70717273747580000000000000000000000000000380) begin
+      $display("\nPadded block:");
+      $display("%h %h %h %h", data_out[511:480], data_out[479:448], data_out[447:416],
+               data_out[415:384]);
+      $display("%h %h %h %h", data_out[383:352], data_out[351:320], data_out[319:288],
+               data_out[287:256]);
+      $display("%h %h %h %h", data_out[255:224], data_out[223:192], data_out[191:160],
+               data_out[159:128]);
+      $display("%h %h %h %h", data_out[127:96], data_out[95:64], data_out[63:32], data_out[31:0]);
+
+      $display("[RESULT] PASS: 896-bit message padded correctly in second block");
     end else begin
-      $display("[RESULT] FAIL: Second block padding error");
-      $display("Expected: all zeros + 00000000000001C0");
+      $display("[RESULT] FAIL: Padding error");
+      $display(
+          "Expected: 696a6b6c6d6e6f706a6b6c6d6e6f70716b6c6d6e6f7071726c6d6e6f707172736d6e6f70717273746e6f70717273747580000000000000000000000000000380");
       $display("Received: %h", data_out);
     end
 

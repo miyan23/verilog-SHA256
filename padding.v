@@ -1,16 +1,3 @@
-/*
- * 模块名称：padding
- *
- * 功能描述：
- *   本模块用于对输入的任意长度消息进行SHA-256算法所需的预处理（填充）。
- *   输入为按字节输入的消息及其有效信号，输出为填充后的512位数据块及块有效信号。
- *
- * 填充规则：
- *   1. 在消息末尾附加一个"1"比特（即10000000）。
- *   2. 补"0"直到消息长度满足 ≡ 448 mod 512（即剩余64位）。
- *   3. 最后补充64位，表示原始消息的位长度（采用大端序）。
- */
-
 module padding (
     input              clk,
     input              rst_n,
@@ -25,23 +12,24 @@ module padding (
   // =============================================
   // 状态定义
   // =============================================
-  localparam IDLE = 3'b000;  // 等待输入
-  localparam RECEIVE = 3'b001;  // 接收输入
-  localparam PAD_1 = 3'b010;  // 补1
-  localparam PAD_0 = 3'b011;  // 补0
-  localparam PAD_LEN = 3'b100;  // 补长度
-  localparam OUTPUT = 3'b101;  // 输出数据块
-  localparam SECOND_BLOCK = 3'b110;  // 处理第二个数据块
+  localparam IDLE = 4'b0000;  // 等待输入
+  localparam RECEIVE = 4'b0001;  // 接收输入
+  localparam OUTPUT_FULL_1 = 4'b0010;
+  localparam OUTPUT_FULL_2 = 4'b0011;
+  localparam OUTPUT_FULL_3 = 4'b0100;
+  localparam PAD_1 = 4'b0101;  // 补1
+  localparam PAD_0 = 4'b0110;  // 补0
+  localparam PAD_LEN = 4'b0111;  // 补长度
+  localparam OUTPUT_LAST = 4'b1000;  // 输出最后一个块
 
   // =============================================
   // 内部寄存器
   // =============================================
-  reg [  2:0] state;
+  reg [  3:0] state;
   reg [ 63:0] data_length;  // 原始消息长度（位）
   reg [  5:0] byte_count;  // 当前块内字节计数（0-63）
   reg [511:0] temp_block;  // 临时存储块数据
   reg [  5:0] fill_pos;  // 填充位置指针
-  reg         second_block;  // 需要第二个块标志
 
   // =============================================
   // 主状态机逻辑
@@ -55,50 +43,41 @@ module padding (
       temp_block     <= 0;
       data_out       <= 0;
       data_out_valid <= 0;
-      data_ready     <= 0;
+      data_ready     <= 1;  // 复位时默认可接收数据
       fill_pos       <= 0;
-      second_block   <= 0;
-
     end else begin
       // 默认输出无效
       data_out_valid <= 0;
 
-      // ------------------------------
-      // 状态机主逻辑
-      // ------------------------------
       case (state)
         IDLE: begin
           // 模块就绪，等待有效输入
           data_ready <= 1;
-
           if (data_in_valid) begin
-            // 单字节消息特殊处理
+            // 处理单字节消息
             if (data_last) begin
-              state               <= PAD_1;
-              data_ready          <= 0;
-              fill_pos            <= 1;
-              data_length         <= 64'd8;
-              temp_block[511:504] <= data_in;
+              data_length <= 64'd8;
+              temp_block[511-:8] <= data_in;
+              byte_count <= 1;
+              state <= PAD_1;
+              fill_pos <= 1;
+              data_ready <= 0;
             end else begin
-              // 正常消息接收
+              // 正常接收数据
               state                           <= RECEIVE;
-              data_length                     <= data_length + 64'd8;
+              data_length                     <= 64'd8;
               temp_block[511-8*byte_count-:8] <= data_in;
               byte_count                      <= byte_count + 1;
               data_ready                      <= (byte_count < 63);
             end
           end else if (data_last) begin
-            // 空消息处理
-            state       <= PAD_1;
-            data_ready  <= 0;
-            fill_pos    <= 0;
-            data_length <= 0;
+            // 处理空消息情况（只有data_last信号）
+            state <= PAD_1;
+            fill_pos <= 0;
+            data_ready <= 0; 
           end
         end
 
-        // ------------------------------
-        // 接收消息状态
-        // ------------------------------
         RECEIVE: begin
           if (data_in_valid) begin
             data_length <= data_length + 64'd8;
@@ -106,76 +85,88 @@ module padding (
             byte_count <= byte_count + 1;
             data_ready <= (byte_count < 63);
 
-            if (byte_count == 63 || data_last) begin
-              state        <= PAD_1;
-              data_ready   <= 0;
+            if (data_last) begin
+              if (byte_count < 55) begin
+                fill_pos <= byte_count + 1;
+                data_ready <= 0;
+                state <= PAD_1;
+              end else if (byte_count >= 55 && byte_count < 63) begin
+                temp_block[511-8*(byte_count+1)-:8] <= 8'h80;
+                state <= OUTPUT_FULL_1;
+              end else if (byte_count == 63) begin
+                state <= OUTPUT_FULL_2;
+              end
+            end
 
-              // 计算填充起始位置（考虑块边界）
-              fill_pos     <= (byte_count == 63) ? 0 : (byte_count + 1);
-              // 检查是否需要第二个块放长度
-              second_block <= (byte_count >= 55);
+            if (byte_count == 63) begin
+              state <= OUTPUT_FULL_3;
             end
           end
         end
 
-        // ------------------------------
-        // 添加填充位"1" (0x80)
-        // ------------------------------
-        PAD_1: begin
-          if (fill_pos < 64) begin
-            temp_block[511-8*fill_pos-:8] <= 8'h80;
-          end
+        OUTPUT_FULL_1: begin
+          data_out       <= temp_block;
+          data_out_valid <= 1;
 
+          temp_block     <= 0;
+          fill_pos       <= 0;
+          byte_count     <= 0;
+          data_ready     <= 0;
+
+          state          <= PAD_0;
+        end
+
+        OUTPUT_FULL_2: begin
+          data_out       <= temp_block;
+          data_out_valid <= 1;
+
+          temp_block     <= 0;
+          fill_pos       <= 0;
+          byte_count     <= 0;
+          data_ready     <= 0;
+
+          state          <= PAD_1;
+        end
+
+        OUTPUT_FULL_3: begin
+          data_out <= temp_block;
+          data_out_valid <= 1;
+
+          data_length <= data_length + 64'd8;
+          temp_block[511-:8] <= data_in;
+          byte_count <= 1;
+          data_ready <= 1;
+          state <= RECEIVE;
+        end
+
+        PAD_1: begin
+          // 添加填充位"1" (0x80)
+          temp_block[511-8*fill_pos-:8] <= 8'h80;
           fill_pos <= fill_pos + 1;
           state    <= PAD_0;
+          data_ready <= 0;
         end
 
-        // ------------------------------
-        // 处理填充0的状态
-        // ------------------------------
         PAD_0: begin
-          if (second_block) begin
-            // 输出第一个块
-            data_out       <= temp_block;
-            data_out_valid <= 1;
-
-            // 准备第二个块
-            temp_block     <= 0;
-            fill_pos       <= 0;
-            state          <= SECOND_BLOCK;
+          if (fill_pos < 56) begin
+            temp_block[511-8*fill_pos-:8] <= 8'h00;
+            fill_pos <= fill_pos + 1;
+            data_ready <= 0;
           end else begin
-            // 单块处理
-            if (fill_pos < 56) begin
-              temp_block[511-8*fill_pos-:8] <= 8'h00;
-              fill_pos <= fill_pos + 1;
-            end else begin
-              state <= PAD_LEN;
-            end
+            state <= PAD_LEN;
+            data_ready <= 0;
           end
         end
 
-        // ------------------------------
-        // 处理第二个数据块
-        // ------------------------------
-        SECOND_BLOCK: begin
-          temp_block[511:64] <= 0;
-          temp_block[63:0] <= data_length;
-
-          state <= OUTPUT;
-        end
-
-        // ------------------------------
-        // 填充消息长度
-        // ------------------------------
         PAD_LEN: begin
+          // 添加消息长度
           temp_block[63:0] <= data_length;
-          state <= OUTPUT;
+          state <= OUTPUT_LAST;
+          data_ready <= 0;
         end
 
-        // ------------------------------
-        // 输出填充完整的数据块
-        // ------------------------------
-        OUTPUT: begin
+        OUTPUT_LAST: begin
+          // 输出最后一个填充块
           data_out       <= temp_block;
           data_out_valid <= 1;
 
@@ -183,13 +174,15 @@ module padding (
           temp_block     <= 0;
           byte_count     <= 0;
           fill_pos       <= 0;
+          data_length    <= 0;
           state          <= IDLE;
+          data_ready     <= 1;  // 返回就绪状态
         end
 
-        // ------------------------------
-        // 未知状态处理
-        // ------------------------------
-        default: state <= IDLE;
+        default: begin
+          state <= IDLE;
+          data_ready <= 1;
+        end
       endcase
     end
   end
