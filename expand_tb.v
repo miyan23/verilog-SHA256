@@ -155,7 +155,7 @@ module expand_tb ();
     // 发送第一个块
     @(posedge clk);
     block_valid = 1;
-    block_in = 512'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f;
+    block_in = 512'h6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f70718000000000000000;
     @(posedge clk);
     block_valid = 0;
 
@@ -163,7 +163,7 @@ module expand_tb ();
     #100;  // 等待部分处理完成
     @(posedge clk);
     block_valid = 1;
-    block_in = 512'h404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f;
+    block_in = 512'h000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c0;
     @(posedge clk);
     block_valid  = 0;
 
@@ -186,10 +186,10 @@ module expand_tb ();
     end
 
     // 验证第二个块的最后一个字是否正确
-    if (Wt_out === 32'hf70b0ebe) begin
+    if (Wt_out === 32'hb9018b52) begin
       $display("[RESULT] PASS: Second block processing finished correctly");
     end else begin
-      $display("[RESULT] FAIL: Second block last word expected f70b0ebe, got %h", Wt_out);
+      $display("[RESULT] FAIL: Second block last word expected b9018b52, got %h", Wt_out);
     end
 
     // =============================================
