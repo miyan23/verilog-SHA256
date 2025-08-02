@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at sha256_compress.v(151): always construct contains both blocking and non-blocking assignments File: E:/VerilogProject/SHA-256/rtl/sha256_compress.v Line: 151

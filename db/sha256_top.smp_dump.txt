@@ -1,0 +1,12 @@
+
+State Machine - |sha256_top|sha256_padding:padding_inst|state
+Name state.PAD_LEN state.PAD_0 state.PAD_1 state.OUTPUT_FULL_3 state.OUTPUT_FULL_2 state.OUTPUT_FULL_1 state.RECEIVE state.IDLE state.OUTPUT_LAST 
+state.IDLE 0 0 0 0 0 0 0 0 0 
+state.RECEIVE 0 0 0 0 0 0 1 1 0 
+state.OUTPUT_FULL_1 0 0 0 0 0 1 0 1 0 
+state.OUTPUT_FULL_2 0 0 0 0 1 0 0 1 0 
+state.OUTPUT_FULL_3 0 0 0 1 0 0 0 1 0 
+state.PAD_1 0 0 1 0 0 0 0 1 0 
+state.PAD_0 0 1 0 0 0 0 0 1 0 
+state.PAD_LEN 1 0 0 0 0 0 0 1 0 
+state.OUTPUT_LAST 0 0 0 0 0 0 0 1 1 

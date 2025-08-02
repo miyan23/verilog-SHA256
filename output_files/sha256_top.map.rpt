@@ -1,0 +1,616 @@
+Analysis & Synthesis report for sha256_top
+Sat Aug 02 22:11:41 2025
+Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |sha256_top|sha256_padding:padding_inst|state
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: Top-level Entity: |sha256_top
+ 14. Parameter Settings for User Entity Instance: sha256_expand:expand_inst
+ 15. Post-Synthesis Netlist Statistics for Top Partition
+ 16. Elapsed Time Per Partition
+ 17. Analysis & Synthesis Messages
+ 18. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+
+
+
++-----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                      ;
++---------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Sat Aug 02 22:11:41 2025           ;
+; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Standard Edition ;
+; Revision Name                   ; sha256_top                                      ;
+; Top-level Entity Name           ; sha256_top                                      ;
+; Family                          ; Cyclone V                                       ;
+; Logic utilization (in ALMs)     ; N/A                                             ;
+; Total registers                 ; 13205                                           ;
+; Total pins                      ; 270                                             ;
+; Total virtual pins              ; 0                                               ;
+; Total block memory bits         ; 0                                               ;
+; Total DSP Blocks                ; 0                                               ;
+; Total HSSI RX PCSs              ; 0                                               ;
+; Total HSSI PMA RX Deserializers ; 0                                               ;
+; Total HSSI TX PCSs              ; 0                                               ;
+; Total HSSI PMA TX Serializers   ; 0                                               ;
+; Total PLLs                      ; 0                                               ;
+; Total DLLs                      ; 0                                               ;
++---------------------------------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                             ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CGXFC7C7F23C8     ;                    ;
+; Top-level entity name                                                           ; sha256_top         ; sha256_top         ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Maximum processors allowed for parallel compilation                             ; 4                  ;                    ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation      ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.80        ;
+; Maximum used               ; 4           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;  26.5%      ;
+;     Processor 3            ;  26.5%      ;
+;     Processor 4            ;  26.5%      ;
++----------------------------+-------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                  ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                    ; Library ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
+; rtl/sha256_top.v                 ; yes             ; User Verilog HDL File  ; E:/VerilogProject/SHA-256/rtl/sha256_top.v      ;         ;
+; rtl/sha256_padding.v             ; yes             ; User Verilog HDL File  ; E:/VerilogProject/SHA-256/rtl/sha256_padding.v  ;         ;
+; rtl/sha256_expand.v              ; yes             ; User Verilog HDL File  ; E:/VerilogProject/SHA-256/rtl/sha256_expand.v   ;         ;
+; rtl/sha256_compress.v            ; yes             ; User Verilog HDL File  ; E:/VerilogProject/SHA-256/rtl/sha256_compress.v ;         ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 9146      ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 8704      ;
+;     -- 7 input functions                    ; 64        ;
+;     -- 6 input functions                    ; 4746      ;
+;     -- 5 input functions                    ; 229       ;
+;     -- 4 input functions                    ; 494       ;
+;     -- <=3 input functions                  ; 3171      ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 13205     ;
+;                                             ;           ;
+; I/O pins                                    ; 270       ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 13205     ;
+; Total fan-out                               ; 95125     ;
+; Average fan-out                             ; 4.24      ;
++---------------------------------------------+-----------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                      ;
++------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
+; Compilation Hierarchy Node         ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                       ; Entity Name     ; Library Name ;
++------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
+; |sha256_top                        ; 8704 (239)          ; 13205 (515)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
+;    |sha256_compress:compress_inst| ; 1048 (1048)         ; 777 (777)                 ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_compress:compress_inst ; sha256_compress ; work         ;
+;    |sha256_expand:expand_inst|     ; 6362 (6362)         ; 10806 (10806)             ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_expand:expand_inst     ; sha256_expand   ; work         ;
+;    |sha256_padding:padding_inst|   ; 1055 (1055)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
++------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |sha256_top|sha256_padding:padding_inst|state                                                                                                                      ;
++---------------------+---------------+-------------+-------------+---------------------+---------------------+---------------------+---------------+------------+-------------------+
+; Name                ; state.PAD_LEN ; state.PAD_0 ; state.PAD_1 ; state.OUTPUT_FULL_3 ; state.OUTPUT_FULL_2 ; state.OUTPUT_FULL_1 ; state.RECEIVE ; state.IDLE ; state.OUTPUT_LAST ;
++---------------------+---------------+-------------+-------------+---------------------+---------------------+---------------------+---------------+------------+-------------------+
+; state.IDLE          ; 0             ; 0           ; 0           ; 0                   ; 0                   ; 0                   ; 0             ; 0          ; 0                 ;
+; state.RECEIVE       ; 0             ; 0           ; 0           ; 0                   ; 0                   ; 0                   ; 1             ; 1          ; 0                 ;
+; state.OUTPUT_FULL_1 ; 0             ; 0           ; 0           ; 0                   ; 0                   ; 1                   ; 0             ; 1          ; 0                 ;
+; state.OUTPUT_FULL_2 ; 0             ; 0           ; 0           ; 0                   ; 1                   ; 0                   ; 0             ; 1          ; 0                 ;
+; state.OUTPUT_FULL_3 ; 0             ; 0           ; 0           ; 1                   ; 0                   ; 0                   ; 0             ; 1          ; 0                 ;
+; state.PAD_1         ; 0             ; 0           ; 1           ; 0                   ; 0                   ; 0                   ; 0             ; 1          ; 0                 ;
+; state.PAD_0         ; 0             ; 1           ; 0           ; 0                   ; 0                   ; 0                   ; 0             ; 1          ; 0                 ;
+; state.PAD_LEN       ; 1             ; 0           ; 0           ; 0                   ; 0                   ; 0                   ; 0             ; 1          ; 0                 ;
+; state.OUTPUT_LAST   ; 0             ; 0           ; 0           ; 0                   ; 0                   ; 0                   ; 0             ; 1          ; 1                 ;
++---------------------+---------------+-------------+-------------+---------------------+---------------------+---------------------+---------------+------------+-------------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                       ;
++-------------------------------------------------+--------------------------------------------------------+
+; Register name                                   ; Reason for Removal                                     ;
++-------------------------------------------------+--------------------------------------------------------+
+; sha256_padding:padding_inst|data_length[1,2]    ; Merged with sha256_padding:padding_inst|data_length[0] ;
+; sha256_padding:padding_inst|data_length[0]      ; Stuck at GND due to stuck port data_in                 ;
+; sha256_expand:expand_inst|fifo_rd_ptr[4]        ; Lost fanout                                            ;
+; sha256_padding:padding_inst|state~13            ; Lost fanout                                            ;
+; sha256_padding:padding_inst|state~14            ; Lost fanout                                            ;
+; sha256_padding:padding_inst|state~15            ; Lost fanout                                            ;
+; sha256_padding:padding_inst|state.OUTPUT_FULL_2 ; Stuck at GND due to stuck port data_in                 ;
+; sha256_expand:expand_inst|fifo_wr_ptr[4]        ; Stuck at GND due to stuck port data_in                 ;
+; Total Number of Removed Registers = 9           ;                                                        ;
++-------------------------------------------------+--------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 13205 ;
+; Number of registers using Synchronous Clear  ; 94    ;
+; Number of registers using Synchronous Load   ; 760   ;
+; Number of registers using Asynchronous Clear ; 13205 ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 13101 ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-----------------------------------------------------+
+; Inverted Register Statistics                        ;
++-------------------------------------------+---------+
+; Inverted Register                         ; Fan out ;
++-------------------------------------------+---------+
+; sha256_padding:padding_inst|data_ready    ; 2       ;
+; intermediate_hash[32]                     ; 3       ;
+; intermediate_hash[0]                      ; 2       ;
+; intermediate_hash[33]                     ; 3       ;
+; intermediate_hash[35]                     ; 3       ;
+; intermediate_hash[3]                      ; 2       ;
+; intermediate_hash[4]                      ; 2       ;
+; intermediate_hash[37]                     ; 3       ;
+; intermediate_hash[39]                     ; 3       ;
+; intermediate_hash[40]                     ; 3       ;
+; intermediate_hash[8]                      ; 2       ;
+; intermediate_hash[10]                     ; 2       ;
+; intermediate_hash[43]                     ; 3       ;
+; intermediate_hash[11]                     ; 2       ;
+; intermediate_hash[44]                     ; 3       ;
+; intermediate_hash[46]                     ; 3       ;
+; intermediate_hash[14]                     ; 2       ;
+; intermediate_hash[47]                     ; 3       ;
+; intermediate_hash[15]                     ; 2       ;
+; intermediate_hash[48]                     ; 3       ;
+; intermediate_hash[49]                     ; 3       ;
+; intermediate_hash[21]                     ; 2       ;
+; intermediate_hash[22]                     ; 2       ;
+; intermediate_hash[55]                     ; 3       ;
+; intermediate_hash[23]                     ; 2       ;
+; intermediate_hash[56]                     ; 3       ;
+; intermediate_hash[24]                     ; 2       ;
+; intermediate_hash[57]                     ; 3       ;
+; intermediate_hash[25]                     ; 2       ;
+; intermediate_hash[58]                     ; 3       ;
+; intermediate_hash[59]                     ; 3       ;
+; intermediate_hash[27]                     ; 2       ;
+; intermediate_hash[60]                     ; 3       ;
+; intermediate_hash[28]                     ; 2       ;
+; intermediate_hash[30]                     ; 2       ;
+; intermediate_hash[66]                     ; 3       ;
+; intermediate_hash[67]                     ; 3       ;
+; intermediate_hash[71]                     ; 3       ;
+; intermediate_hash[75]                     ; 3       ;
+; intermediate_hash[77]                     ; 3       ;
+; intermediate_hash[78]                     ; 3       ;
+; intermediate_hash[80]                     ; 3       ;
+; intermediate_hash[82]                     ; 3       ;
+; intermediate_hash[88]                     ; 3       ;
+; intermediate_hash[89]                     ; 3       ;
+; intermediate_hash[91]                     ; 3       ;
+; intermediate_hash[92]                     ; 3       ;
+; intermediate_hash[95]                     ; 3       ;
+; intermediate_hash[96]                     ; 6       ;
+; intermediate_hash[97]                     ; 6       ;
+; intermediate_hash[98]                     ; 6       ;
+; intermediate_hash[99]                     ; 6       ;
+; intermediate_hash[100]                    ; 6       ;
+; intermediate_hash[101]                    ; 6       ;
+; intermediate_hash[102]                    ; 6       ;
+; intermediate_hash[105]                    ; 6       ;
+; intermediate_hash[108]                    ; 6       ;
+; intermediate_hash[110]                    ; 6       ;
+; intermediate_hash[113]                    ; 6       ;
+; intermediate_hash[114]                    ; 6       ;
+; intermediate_hash[115]                    ; 6       ;
+; intermediate_hash[120]                    ; 6       ;
+; intermediate_hash[124]                    ; 6       ;
+; intermediate_hash[126]                    ; 6       ;
+; intermediate_hash[161]                    ; 3       ;
+; intermediate_hash[129]                    ; 2       ;
+; intermediate_hash[131]                    ; 2       ;
+; intermediate_hash[164]                    ; 3       ;
+; intermediate_hash[132]                    ; 2       ;
+; intermediate_hash[165]                    ; 3       ;
+; intermediate_hash[133]                    ; 2       ;
+; intermediate_hash[166]                    ; 3       ;
+; intermediate_hash[168]                    ; 3       ;
+; intermediate_hash[136]                    ; 2       ;
+; intermediate_hash[169]                    ; 3       ;
+; intermediate_hash[138]                    ; 2       ;
+; intermediate_hash[172]                    ; 3       ;
+; intermediate_hash[140]                    ; 2       ;
+; intermediate_hash[173]                    ; 3       ;
+; intermediate_hash[141]                    ; 2       ;
+; intermediate_hash[174]                    ; 3       ;
+; intermediate_hash[142]                    ; 2       ;
+; intermediate_hash[175]                    ; 3       ;
+; intermediate_hash[143]                    ; 2       ;
+; intermediate_hash[144]                    ; 2       ;
+; intermediate_hash[177]                    ; 3       ;
+; intermediate_hash[145]                    ; 2       ;
+; intermediate_hash[178]                    ; 3       ;
+; intermediate_hash[146]                    ; 2       ;
+; intermediate_hash[179]                    ; 3       ;
+; intermediate_hash[147]                    ; 2       ;
+; intermediate_hash[181]                    ; 3       ;
+; intermediate_hash[182]                    ; 3       ;
+; intermediate_hash[150]                    ; 2       ;
+; intermediate_hash[152]                    ; 2       ;
+; intermediate_hash[186]                    ; 3       ;
+; intermediate_hash[154]                    ; 2       ;
+; intermediate_hash[187]                    ; 3       ;
+; intermediate_hash[188]                    ; 3       ;
+; intermediate_hash[189]                    ; 3       ;
+; Total number of inverted registers = 137* ;         ;
++-------------------------------------------+---------+
+* Table truncated at 100 items. To change the number of inverted registers reported, set the "Number of Inverted Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------+
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[0][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[1][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[2][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[3][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[4][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[5][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[6][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[7][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[8][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[9][31]             ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[10][31]            ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[11][31]            ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[12][31]            ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[13][31]            ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[14][31]            ;
+; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[15][31]            ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|byte_count[4]      ;
+; 9:1                ; 5 bits    ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|fill_pos[5]        ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[501]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[491]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[482]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[477]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[464]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[462]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[450]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[441]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[432]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[426]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[417]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[413]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[403]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[395]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[388]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[382]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[373]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[364]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[358]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[345]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[341]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[334]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[324]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[315]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[306]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[302]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[294]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[285]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[277]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[270]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[257]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[249]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[242]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[238]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[230]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[220]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[208]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[206]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[194]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[187]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[182]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[173]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[166]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[152]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[147]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[136]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[130]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[126]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[118]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[107]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[96]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[88]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[80]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[78]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[68]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[60]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[53]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[41]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[36]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[27]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[20]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[13]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[4]      ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[506]    ;
+; 13:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; No         ; |sha256_top|sha256_padding:padding_inst|Selector2120       ;
+; 3:1                ; 480 bits  ; 960 LEs       ; 480 LEs              ; 480 LEs                ; Yes        ; |sha256_top|sha256_expand:expand_inst|pipeline_reg[3][15]  ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|pipeline_reg[15][31] ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux14                ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux111               ;
+; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux92                ;
+; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux63                ;
+; 3:1                ; 192 bits  ; 384 LEs       ; 0 LEs                ; 384 LEs                ; Yes        ; |sha256_top|sha256_compress:compress_inst|g[0][6]          ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |sha256_top|sha256_compress:compress_inst|wt_counter[4]    ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|expand_counter[5]    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_count[4]        ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_rd_ptr[3]       ;
+; 7:1                ; 61 bits   ; 244 LEs       ; 61 LEs               ; 183 LEs                ; Yes        ; |sha256_top|sha256_padding:padding_inst|data_length[58]    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |sha256_top                                                                                                                                                                                                                          ;
++----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; Parameter Name ; Value                                                                                                                                                                                                                                                            ; Type            ;
++----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+; INITIAL_HASH   ; 0110101000001001111001100110011110111011011001111010111010000101001111000110111011110011011100101010010101001111111101010011101001010001000011100101001001111111100110110000010101101000100011000001111110000011110110011010101101011011111000001100110100011001 ; Unsigned Binary ;
++----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: sha256_expand:expand_inst ;
++----------------+-------+-----------------------------------------------+
+; Parameter Name ; Value ; Type                                          ;
++----------------+-------+-----------------------------------------------+
+; FIFO_DEPTH     ; 16    ; Signed Integer                                ;
++----------------+-------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 13205                       ;
+;     CLR               ; 103                         ;
+;     CLR SCLR          ; 1                           ;
+;     ENA CLR           ; 12248                       ;
+;     ENA CLR SCLR      ; 93                          ;
+;     ENA CLR SLD       ; 760                         ;
+; arriav_lcell_comb     ; 8705                        ;
+;     arith             ; 545                         ;
+;         1 data inputs ; 97                          ;
+;         2 data inputs ; 381                         ;
+;         3 data inputs ; 3                           ;
+;         5 data inputs ; 64                          ;
+;     extend            ; 64                          ;
+;         7 data inputs ; 64                          ;
+;     normal            ; 7968                        ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 375                         ;
+;         2 data inputs ; 617                         ;
+;         3 data inputs ; 1570                        ;
+;         4 data inputs ; 494                         ;
+;         5 data inputs ; 165                         ;
+;         6 data inputs ; 4746                        ;
+;     shared            ; 128                         ;
+;         3 data inputs ; 128                         ;
+; boundary_port         ; 270                         ;
+;                       ;                             ;
+; Max LUT depth         ; 10.10                       ;
+; Average LUT depth     ; 3.90                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:11     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
+    Info: Copyright (C) 2017  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details.
+    Info: Processing started: Sat Aug 02 22:11:19 2025
+Info: Command: quartus_map sha256_top
+Info (20032): Parallel compilation is enabled and will use up to 4 processors
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/tb_sha256_top.v
+    Info (12023): Found entity 1: tb_sha256_top File: E:/VerilogProject/SHA-256/rtl/tb_sha256_top.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_top.v
+    Info (12023): Found entity 1: sha256_top File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 13
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_padding.v
+    Info (12023): Found entity 1: sha256_padding File: E:/VerilogProject/SHA-256/rtl/sha256_padding.v Line: 16
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_expand.v
+    Info (12023): Found entity 1: sha256_expand File: E:/VerilogProject/SHA-256/rtl/sha256_expand.v Line: 14
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_compress.v
+    Info (12023): Found entity 1: sha256_compress File: E:/VerilogProject/SHA-256/rtl/sha256_compress.v Line: 14
+Info (12127): Elaborating entity "sha256_top" for the top level hierarchy
+Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 71
+Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 81
+Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 92
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 4 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file E:/VerilogProject/SHA-256/output_files/sha256_top.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 19943 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 12 input pins
+    Info (21059): Implemented 258 output pins
+    Info (21061): Implemented 19673 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 4982 megabytes
+    Info: Processing ended: Sat Aug 02 22:11:41 2025
+    Info: Elapsed time: 00:00:22
+    Info: Total CPU time (on all processors): 00:00:11
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in E:/VerilogProject/SHA-256/output_files/sha256_top.map.smsg.
+
+

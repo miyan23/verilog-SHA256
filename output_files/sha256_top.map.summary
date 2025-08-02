@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Sat Aug 02 22:11:41 2025
+Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Standard Edition
+Revision Name : sha256_top
+Top-level Entity Name : sha256_top
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 13205
+Total pins : 270
+Total virtual pins : 0
+Total block memory bits : 0
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0
