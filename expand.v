@@ -62,7 +62,9 @@ module expand (
       Wt_valid       <= 0;
 
       // 复位FIFO
-      for (integer i = 0; i < FIFO_DEPTH; i++) fifo[i] <= 0;
+      for (integer i = 0; i < FIFO_DEPTH; i++) begin
+        fifo[i] <= 0;
+      end
       fifo_wr_ptr <= 0;
       fifo_rd_ptr <= 0;
       fifo_count  <= 0;
@@ -76,7 +78,8 @@ module expand (
       // ------------------------------
       if (block_valid && fifo_count < FIFO_DEPTH) begin
         fifo[fifo_wr_ptr] <= block_in;
-        fifo_wr_ptr <= fifo_wr_ptr + 1;
+        // 写指针绕回处理
+        fifo_wr_ptr <= (fifo_wr_ptr == FIFO_DEPTH - 1) ? 0 : fifo_wr_ptr + 1;
         fifo_count <= fifo_count + 1;
       end
 
@@ -124,7 +127,9 @@ module expand (
             end
             expand_counter <= 16;
             expand_active <= 1;
-            fifo_rd_ptr <= fifo_rd_ptr + 1;
+
+            // 读指针绕回处理
+            fifo_rd_ptr <= (fifo_rd_ptr == FIFO_DEPTH - 1) ? 0 : fifo_rd_ptr + 1;
             fifo_count <= fifo_count - 1;
           end
         end
@@ -136,7 +141,9 @@ module expand (
         end
         expand_counter <= 16;
         expand_active <= 1;
-        fifo_rd_ptr <= fifo_rd_ptr + 1;
+
+        // 读指针绕回处理
+        fifo_rd_ptr <= (fifo_rd_ptr == FIFO_DEPTH - 1) ? 0 : fifo_rd_ptr + 1;
         fifo_count <= fifo_count - 1;
       end
     end
