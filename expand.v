@@ -4,7 +4,7 @@
  * 功能描述：
  *   本模块用于对输入的512位消息块进行SHA-256算法所需的消息扩展。
  *   采用16级流水线结构，每周期输出一个扩展后的消息字Wt。
- *   支持连续块处理，当第一个块正在处理时接收第二个块会先缓存。
+ *   支持连续块处理，使用FIFO缓存机制处理任意数量的连续输入块。
  *
  * 扩展规则：
  *   1. 前16个字直接取自输入消息块
@@ -23,12 +23,17 @@ module expand (
   // =============================================
   // 内部信号定义
   // =============================================
-  reg [ 31:0] W                                           [0:63];  // 消息调度数组
-  reg [ 31:0] pipeline_reg                                    [0:15];  // 16级流水线寄存器
-  reg [  6:0] expand_counter;  // 扩展计数器 (0-63)
-  reg         expand_active;  // 扩展过程激活标志
-  reg [511:0] buffer_block;  // 输入块缓存
-  reg         buffer_valid;  // 缓存有效标志
+  reg [31:0] W                                           [0:63];  // 消息调度数组
+  reg [31:0] pipeline_reg                                [0:15];  // 16级流水线寄存器
+  reg [ 6:0] expand_counter;  // 扩展计数器 (0-63)
+  reg        expand_active;  // 扩展过程激活标志
+
+  // FIFO缓存定义
+  parameter FIFO_DEPTH = 16;  // FIFO深度，可根据需要调整
+  reg [511:0] fifo                                [0:FIFO_DEPTH-1];  // FIFO存储
+  reg [  4:0] fifo_wr_ptr;  // FIFO写指针
+  reg [  4:0] fifo_rd_ptr;  // FIFO读指针
+  reg [  4:0] fifo_count;  // FIFO中有效块数
 
   // =============================================
   // σ0和σ1函数定义
@@ -55,30 +60,24 @@ module expand (
       expand_active  <= 0;
       Wt_out         <= 0;
       Wt_valid       <= 0;
-      buffer_block   <= 0;
-      buffer_valid   <= 0;
+
+      // 复位FIFO
+      for (integer i = 0; i < FIFO_DEPTH; i++) fifo[i] <= 0;
+      fifo_wr_ptr <= 0;
+      fifo_rd_ptr <= 0;
+      fifo_count  <= 0;
 
     end else begin
       // 默认输出无效
       Wt_valid <= 0;
 
       // ------------------------------
-      // 输入块处理（含缓存逻辑）
+      // 输入块处理（FIFO写入）
       // ------------------------------
-      if (block_valid) begin
-        if (!expand_active) begin
-          // 当前无处理块，直接处理新块
-          for (integer t = 0; t < 16; t++) begin
-            W[t]        <= block_in[511-32*t-:32];
-            pipeline_reg[t] <= 32'hFFFFFFFF;
-          end
-          expand_counter <= 16;
-          expand_active  <= 1;
-        end else begin
-          // 当前正处理块，缓存新块
-          buffer_block <= block_in;
-          buffer_valid <= 1;
-        end
+      if (block_valid && fifo_count < FIFO_DEPTH) begin
+        fifo[fifo_wr_ptr] <= block_in;
+        fifo_wr_ptr <= fifo_wr_ptr + 1;
+        fifo_count <= fifo_count + 1;
       end
 
       // ------------------------------
@@ -116,17 +115,29 @@ module expand (
           expand_active <= 0;
           Wt_valid      <= 0;
 
-          // 检查并处理缓存块
-          if (buffer_valid) begin
+          // 检查FIFO中是否有待处理块
+          if (fifo_count > 0) begin
+            // 从FIFO读取下一个块
             for (integer t = 0; t < 16; t++) begin
-              W[t]        <= buffer_block[511-32*t-:32];
+              W[t]            <= fifo[fifo_rd_ptr][511-32*t-:32];
               pipeline_reg[t] <= 32'hFFFFFFFF;
             end
             expand_counter <= 16;
-            expand_active  <= 1;
-            buffer_valid   <= 0;
+            expand_active <= 1;
+            fifo_rd_ptr <= fifo_rd_ptr + 1;
+            fifo_count <= fifo_count - 1;
           end
         end
+      end else if (fifo_count > 0) begin
+        // 当前无处理块且FIFO不为空，开始处理下一个块
+        for (integer t = 0; t < 16; t++) begin
+          W[t]            <= fifo[fifo_rd_ptr][511-32*t-:32];
+          pipeline_reg[t] <= 32'hFFFFFFFF;
+        end
+        expand_counter <= 16;
+        expand_active <= 1;
+        fifo_rd_ptr <= fifo_rd_ptr + 1;
+        fifo_count <= fifo_count - 1;
       end
     end
   end

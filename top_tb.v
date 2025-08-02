@@ -92,9 +92,9 @@ module top_tb ();
 
     // 验证结果 (标准SHA-256("abc")结果)
     if (hash_out === 256'hba7816bf_8f01cfea_414140de_5dae2223_b00361a3_96177a9c_b410ff61_f20015ad) begin
-      $display("[RESULT] PASS: Hash matches expected value for 'abc'");
+      $display("[RESULT] PASS");
     end else begin
-      $display("[RESULT] FAIL: Hash mismatch for 'abc'");
+      $display("[RESULT] FAIL");
       $display("Expected: ba7816bf_8f01cfea_414140de_5dae2223_b00361a3_96177a9c_b410ff61_f20015ad");
       $display("Received: %h", hash_out);
     end
@@ -138,18 +138,18 @@ module top_tb ();
 
     // 验证结果 (标准SHA-256("")结果)
     if (hash_out === 256'he3b0c442_98fc1c14_9afbf4c8_996fb924_27ae41e4_649b934c_a495991b_7852b855) begin
-      $display("[RESULT] PASS: Hash matches expected value for empty message");
+      $display("[RESULT] PASS");
     end else begin
-      $display("[RESULT] FAIL: Hash mismatch for empty message");
+      $display("[RESULT] FAIL");
       $display("Expected: e3b0c442_98fc1c14_9afbf4c8_996fb924_27ae41e4_649b934c_a495991b_7852b855");
       $display("Received: %h", hash_out);
     end
 
     // =============================================
-    // 测试用例3：基本功能测试 - "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"消息
+    // 测试用例3：基本功能测试448 bits - "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"消息
     // =============================================
     $display(
-        "\n[TEST CASE 3] Testing 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq' message (standard test vector)");
+        "\n[TEST CASE 3] Testing 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq' message (448 bits)");
 
     // 测试用例3："abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"消息
     test_message[0]  = "a";
@@ -252,20 +252,18 @@ module top_tb ();
 
     // 验证结果
     if (hash_out === 256'h248d6a61_d20638b8_e5c02693_0c3e6039_a33ce459_64ff2167_f6ecedd4_19db06c1) begin
-      $display(
-          "[RESULT] PASS: Hash matches expected value for 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq'");
+      $display("[RESULT] PASS");
     end else begin
-      $display(
-          "[RESULT] FAIL: Hash mismatch for 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq'");
+      $display("[RESULT] FAIL");
       $display("Expected: 248d6a61_d20638b8_e5c02693_0c3e6039_a33ce459_64ff2167_f6ecedd4_19db06c1");
       $display("Received: %h", hash_out);
     end
 
     // =============================================
-    // 测试用例4：基本功能测试 - "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
+    // 测试用例4：基本功能测试896 bits - "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
     // =============================================
     $display(
-        "\n[TEST CASE 4] Testing 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu' message (standard test vector)");
+        "\n[TEST CASE 4] Testing 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu' message (896 bits)");
 
     // 测试用例4："abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
     test_message[0] = "a";
@@ -424,60 +422,72 @@ module top_tb ();
 
     // 验证结果
     if (hash_out === 256'hcf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1) begin
-      $display(
-          "[RESULT] PASS: Hash matches expected value for 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu'");
+      $display("[RESULT] PASS");
     end else begin
-      $display(
-          "[RESULT] FAIL: Hash mismatch for 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu'");
+      $display("[RESULT] FAIL");
       $display("Expected: cf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1");
       $display("Received: %h", hash_out);
     end
 
     // =============================================
-    // 测试用例4：背压测试 (data_ready信号)
+    // 测试用例5：基本功能测试1000 bytes - "a"*1000消息
     // =============================================
-    // $display("\n[TEST CASE 4] Testing backpressure (data_ready signal)");
+    $display("\n[TEST CASE 5] Testing 'a'*1000 message (1000 bytes)");
 
-    // // 准备测试消息
-    // test_message[0] = "t";
-    // test_message[1] = "e";
-    // test_message[2] = "s";
-    // test_message[3] = "t";
-    // message_length  = 4;
+    // 初始化
+    #20;
+    rst_n = 0;
+    data_in = 0;
+    data_in_valid = 0;
+    data_last = 0;
+    #10;
 
-    // // 重新初始化
-    // #20;
-    // rst_n = 0;
-    // data_in = 0;
-    // data_in_valid = 0;
-    // data_last = 0;
-    // #10;
+    // 释放复位
+    rst_n = 1;
+    #10;
 
-    // // 释放复位
-    // rst_n = 1;
-    // #10;
+    // 等待模块就绪
+    wait (data_ready);
+    @(posedge clk);
 
-    // // 测试背压
-    // for (i = 0; i < message_length; i = i + 1) begin
-    //   // 等待模块就绪
-    //   while (!data_ready) @(posedge clk);
+    // 发送消息
+    for (i = 0; i < 1000; i = i + 1) begin
+      data_in = "a";
+      data_in_valid = 1;
+      data_last = (i == 1000 - 1);
+      @(posedge clk);
+    end
 
-    //   // 发送数据
-    //   data_in = test_message[i];
-    //   data_in_valid = 1;
-    //   data_last = (i == message_length - 1);
-    //   @(posedge clk);
-    // end
+    // 结束输入
+    data_in_valid = 0;
+    data_last = 0;
 
-    // // 结束输入
-    // data_in_valid = 0;
-    // data_last = 0;
+    // 等待哈希输出————验证第十六个哈希输出
+    wait (hash_out_valid);
+    @(negedge hash_out_valid);
+    wait (hash_out_valid);
+    @(negedge hash_out_valid);
+    wait (hash_out_valid);
+    @(negedge hash_out_valid);
+    wait (hash_out_valid);
+    @(negedge hash_out_valid);
+    wait (hash_out_valid);
+    #0.1;
 
-    // // 等待哈希输出
-    // wait (hash_out_valid);
-    // #0.1;
+    // 显示结果
+    $display("Final hash:");
+    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
+             hash_out[159:128]);
+    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
 
-    // $display("[RESULT] PASS: Backpressure test completed");
+    // 验证结果
+    if (hash_out === 256'h41edece4_2d63e8d9_bf515a9b_a6932e1c_20cbc9f5_a5d13464_5adb5db1_b9737ea3) begin
+      $display("[RESULT] PASS");
+    end else begin
+      $display("[RESULT] FAIL");
+      $display("Expected: 41edece4_2d63e8d9_bf515a9b_a6932e1c_20cbc9f5_a5d13464_5adb5db1_b9737ea3");
+      $display("Received: %h", hash_out);
+    end
 
     // =============================================
     // 结束仿真
