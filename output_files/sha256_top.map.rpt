@@ -1,5 +1,5 @@
 Analysis & Synthesis report for sha256_top
-Sun Aug 03 11:18:53 2025
+Sun Aug 03 15:05:09 2025
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
 
 
@@ -49,13 +49,13 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Aug 03 11:18:52 2025           ;
+; Analysis & Synthesis Status     ; Successful - Sun Aug 03 15:05:09 2025           ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; sha256_top                                      ;
 ; Top-level Entity Name           ; sha256_top                                      ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 13205                                           ;
+; Total registers                 ; 13083                                           ;
 ; Total pins                      ; 270                                             ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 0                                               ;
@@ -165,14 +165,14 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.74        ;
+; Average used               ; 1.77        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  24.9%      ;
-;     Processor 3            ;  24.9%      ;
-;     Processor 4            ;  24.7%      ;
+;     Processor 2            ;  25.8%      ;
+;     Processor 3            ;  25.8%      ;
+;     Processor 4            ;  25.7%      ;
 +----------------------------+-------------+
 
 
@@ -193,24 +193,24 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 9152      ;
+; Estimate of Logic utilization (ALMs needed) ; 9091      ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 8678      ;
+; Combinational ALUT usage for logic          ; 8677      ;
 ;     -- 7 input functions                    ; 85        ;
 ;     -- 6 input functions                    ; 4725      ;
 ;     -- 5 input functions                    ; 226       ;
 ;     -- 4 input functions                    ; 484       ;
-;     -- <=3 input functions                  ; 3158      ;
+;     -- <=3 input functions                  ; 3157      ;
 ;                                             ;           ;
-; Dedicated logic registers                   ; 13205     ;
+; Dedicated logic registers                   ; 13083     ;
 ;                                             ;           ;
 ; I/O pins                                    ; 270       ;
 ;                                             ;           ;
 ; Total DSP Blocks                            ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 13205     ;
-; Total fan-out                               ; 95048     ;
+; Maximum fan-out                             ; 13083     ;
+; Total fan-out                               ; 94560     ;
 ; Average fan-out                             ; 4.24      ;
 +---------------------------------------------+-----------+
 
@@ -220,7 +220,7 @@ refer to the applicable agreement for further details.
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node         ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                       ; Entity Name     ; Library Name ;
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
-; |sha256_top                        ; 8678 (239)          ; 13205 (515)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
+; |sha256_top                        ; 8677 (238)          ; 13083 (393)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
 ;    |sha256_compress:compress_inst| ; 1048 (1048)         ; 777 (777)                 ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_compress:compress_inst ; sha256_compress ; work         ;
 ;    |sha256_expand:expand_inst|     ; 6362 (6362)         ; 10806 (10806)             ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_expand:expand_inst     ; sha256_expand   ; work         ;
 ;    |sha256_padding:padding_inst|   ; 1029 (1029)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
@@ -252,6 +252,126 @@ Encoding Type:  One-Hot
 ; Register name                                   ; Reason for Removal                                     ;
 +-------------------------------------------------+--------------------------------------------------------+
 ; sha256_padding:padding_inst|data_length[1,2]    ; Merged with sha256_padding:padding_inst|data_length[0] ;
+; hash_out[255]~reg0                              ; Merged with intermediate_hash[255]                     ;
+; hash_out[252]~reg0                              ; Merged with intermediate_hash[252]                     ;
+; hash_out[250]~reg0                              ; Merged with intermediate_hash[250]                     ;
+; hash_out[248]~reg0                              ; Merged with intermediate_hash[248]                     ;
+; hash_out[247]~reg0                              ; Merged with intermediate_hash[247]                     ;
+; hash_out[246]~reg0                              ; Merged with intermediate_hash[246]                     ;
+; hash_out[245]~reg0                              ; Merged with intermediate_hash[245]                     ;
+; hash_out[244]~reg0                              ; Merged with intermediate_hash[244]                     ;
+; hash_out[242]~reg0                              ; Merged with intermediate_hash[242]                     ;
+; hash_out[241]~reg0                              ; Merged with intermediate_hash[241]                     ;
+; hash_out[236]~reg0                              ; Merged with intermediate_hash[236]                     ;
+; hash_out[235]~reg0                              ; Merged with intermediate_hash[235]                     ;
+; hash_out[232]~reg0                              ; Merged with intermediate_hash[232]                     ;
+; hash_out[231]~reg0                              ; Merged with intermediate_hash[231]                     ;
+; hash_out[228]~reg0                              ; Merged with intermediate_hash[228]                     ;
+; hash_out[227]~reg0                              ; Merged with intermediate_hash[227]                     ;
+; hash_out[222]~reg0                              ; Merged with intermediate_hash[222]                     ;
+; hash_out[218]~reg0                              ; Merged with intermediate_hash[218]                     ;
+; hash_out[215]~reg0                              ; Merged with intermediate_hash[215]                     ;
+; hash_out[212]~reg0                              ; Merged with intermediate_hash[212]                     ;
+; hash_out[211]~reg0                              ; Merged with intermediate_hash[211]                     ;
+; hash_out[206]~reg0                              ; Merged with intermediate_hash[206]                     ;
+; hash_out[204]~reg0                              ; Merged with intermediate_hash[204]                     ;
+; hash_out[200]~reg0                              ; Merged with intermediate_hash[200]                     ;
+; hash_out[198]~reg0                              ; Merged with intermediate_hash[198]                     ;
+; hash_out[197]~reg0                              ; Merged with intermediate_hash[197]                     ;
+; hash_out[196]~reg0                              ; Merged with intermediate_hash[196]                     ;
+; hash_out[195]~reg0                              ; Merged with intermediate_hash[195]                     ;
+; hash_out[193]~reg0                              ; Merged with intermediate_hash[193]                     ;
+; hash_out[191]~reg0                              ; Merged with intermediate_hash[191]                     ;
+; hash_out[190]~reg0                              ; Merged with intermediate_hash[190]                     ;
+; hash_out[185]~reg0                              ; Merged with intermediate_hash[185]                     ;
+; hash_out[184]~reg0                              ; Merged with intermediate_hash[184]                     ;
+; hash_out[183]~reg0                              ; Merged with intermediate_hash[183]                     ;
+; hash_out[180]~reg0                              ; Merged with intermediate_hash[180]                     ;
+; hash_out[176]~reg0                              ; Merged with intermediate_hash[176]                     ;
+; hash_out[171]~reg0                              ; Merged with intermediate_hash[171]                     ;
+; hash_out[170]~reg0                              ; Merged with intermediate_hash[170]                     ;
+; hash_out[167]~reg0                              ; Merged with intermediate_hash[167]                     ;
+; hash_out[163]~reg0                              ; Merged with intermediate_hash[163]                     ;
+; hash_out[162]~reg0                              ; Merged with intermediate_hash[162]                     ;
+; hash_out[160]~reg0                              ; Merged with intermediate_hash[160]                     ;
+; hash_out[158]~reg0                              ; Merged with intermediate_hash[158]                     ;
+; hash_out[156]~reg0                              ; Merged with intermediate_hash[156]                     ;
+; hash_out[155]~reg0                              ; Merged with intermediate_hash[155]                     ;
+; hash_out[153]~reg0                              ; Merged with intermediate_hash[153]                     ;
+; hash_out[151]~reg0                              ; Merged with intermediate_hash[151]                     ;
+; hash_out[149]~reg0                              ; Merged with intermediate_hash[149]                     ;
+; hash_out[148]~reg0                              ; Merged with intermediate_hash[148]                     ;
+; hash_out[139]~reg0                              ; Merged with intermediate_hash[139]                     ;
+; hash_out[137]~reg0                              ; Merged with intermediate_hash[137]                     ;
+; hash_out[135]~reg0                              ; Merged with intermediate_hash[135]                     ;
+; hash_out[134]~reg0                              ; Merged with intermediate_hash[134]                     ;
+; hash_out[130]~reg0                              ; Merged with intermediate_hash[130]                     ;
+; hash_out[128]~reg0                              ; Merged with intermediate_hash[128]                     ;
+; hash_out[127]~reg0                              ; Merged with intermediate_hash[127]                     ;
+; hash_out[125]~reg0                              ; Merged with intermediate_hash[125]                     ;
+; hash_out[123]~reg0                              ; Merged with intermediate_hash[123]                     ;
+; hash_out[122]~reg0                              ; Merged with intermediate_hash[122]                     ;
+; hash_out[121]~reg0                              ; Merged with intermediate_hash[121]                     ;
+; hash_out[119]~reg0                              ; Merged with intermediate_hash[119]                     ;
+; hash_out[118]~reg0                              ; Merged with intermediate_hash[118]                     ;
+; hash_out[117]~reg0                              ; Merged with intermediate_hash[117]                     ;
+; hash_out[116]~reg0                              ; Merged with intermediate_hash[116]                     ;
+; hash_out[112]~reg0                              ; Merged with intermediate_hash[112]                     ;
+; hash_out[111]~reg0                              ; Merged with intermediate_hash[111]                     ;
+; hash_out[109]~reg0                              ; Merged with intermediate_hash[109]                     ;
+; hash_out[107]~reg0                              ; Merged with intermediate_hash[107]                     ;
+; hash_out[106]~reg0                              ; Merged with intermediate_hash[106]                     ;
+; hash_out[104]~reg0                              ; Merged with intermediate_hash[104]                     ;
+; hash_out[103]~reg0                              ; Merged with intermediate_hash[103]                     ;
+; hash_out[94]~reg0                               ; Merged with intermediate_hash[94]                      ;
+; hash_out[93]~reg0                               ; Merged with intermediate_hash[93]                      ;
+; hash_out[90]~reg0                               ; Merged with intermediate_hash[90]                      ;
+; hash_out[87]~reg0                               ; Merged with intermediate_hash[87]                      ;
+; hash_out[86]~reg0                               ; Merged with intermediate_hash[86]                      ;
+; hash_out[85]~reg0                               ; Merged with intermediate_hash[85]                      ;
+; hash_out[84]~reg0                               ; Merged with intermediate_hash[84]                      ;
+; hash_out[83]~reg0                               ; Merged with intermediate_hash[83]                      ;
+; hash_out[81]~reg0                               ; Merged with intermediate_hash[81]                      ;
+; hash_out[79]~reg0                               ; Merged with intermediate_hash[79]                      ;
+; hash_out[76]~reg0                               ; Merged with intermediate_hash[76]                      ;
+; hash_out[74]~reg0                               ; Merged with intermediate_hash[74]                      ;
+; hash_out[73]~reg0                               ; Merged with intermediate_hash[73]                      ;
+; hash_out[72]~reg0                               ; Merged with intermediate_hash[72]                      ;
+; hash_out[70]~reg0                               ; Merged with intermediate_hash[70]                      ;
+; hash_out[69]~reg0                               ; Merged with intermediate_hash[69]                      ;
+; hash_out[68]~reg0                               ; Merged with intermediate_hash[68]                      ;
+; hash_out[65]~reg0                               ; Merged with intermediate_hash[65]                      ;
+; hash_out[64]~reg0                               ; Merged with intermediate_hash[64]                      ;
+; hash_out[63]~reg0                               ; Merged with intermediate_hash[63]                      ;
+; hash_out[62]~reg0                               ; Merged with intermediate_hash[62]                      ;
+; hash_out[61]~reg0                               ; Merged with intermediate_hash[61]                      ;
+; hash_out[54]~reg0                               ; Merged with intermediate_hash[54]                      ;
+; hash_out[53]~reg0                               ; Merged with intermediate_hash[53]                      ;
+; hash_out[52]~reg0                               ; Merged with intermediate_hash[52]                      ;
+; hash_out[51]~reg0                               ; Merged with intermediate_hash[51]                      ;
+; hash_out[50]~reg0                               ; Merged with intermediate_hash[50]                      ;
+; hash_out[45]~reg0                               ; Merged with intermediate_hash[45]                      ;
+; hash_out[42]~reg0                               ; Merged with intermediate_hash[42]                      ;
+; hash_out[41]~reg0                               ; Merged with intermediate_hash[41]                      ;
+; hash_out[38]~reg0                               ; Merged with intermediate_hash[38]                      ;
+; hash_out[36]~reg0                               ; Merged with intermediate_hash[36]                      ;
+; hash_out[34]~reg0                               ; Merged with intermediate_hash[34]                      ;
+; hash_out[31]~reg0                               ; Merged with intermediate_hash[31]                      ;
+; hash_out[29]~reg0                               ; Merged with intermediate_hash[29]                      ;
+; hash_out[26]~reg0                               ; Merged with intermediate_hash[26]                      ;
+; hash_out[20]~reg0                               ; Merged with intermediate_hash[20]                      ;
+; hash_out[19]~reg0                               ; Merged with intermediate_hash[19]                      ;
+; hash_out[18]~reg0                               ; Merged with intermediate_hash[18]                      ;
+; hash_out[17]~reg0                               ; Merged with intermediate_hash[17]                      ;
+; hash_out[16]~reg0                               ; Merged with intermediate_hash[16]                      ;
+; hash_out[13]~reg0                               ; Merged with intermediate_hash[13]                      ;
+; hash_out[12]~reg0                               ; Merged with intermediate_hash[12]                      ;
+; hash_out[9]~reg0                                ; Merged with intermediate_hash[9]                       ;
+; hash_out[7]~reg0                                ; Merged with intermediate_hash[7]                       ;
+; hash_out[6]~reg0                                ; Merged with intermediate_hash[6]                       ;
+; hash_out[5]~reg0                                ; Merged with intermediate_hash[5]                       ;
+; hash_out[2]~reg0                                ; Merged with intermediate_hash[2]                       ;
+; hash_out[1]~reg0                                ; Merged with intermediate_hash[1]                       ;
 ; sha256_padding:padding_inst|data_length[0]      ; Stuck at GND due to stuck port data_in                 ;
 ; sha256_expand:expand_inst|fifo_rd_ptr[4]        ; Lost fanout                                            ;
 ; sha256_padding:padding_inst|state~13            ; Lost fanout                                            ;
@@ -259,7 +379,7 @@ Encoding Type:  One-Hot
 ; sha256_padding:padding_inst|state~15            ; Lost fanout                                            ;
 ; sha256_padding:padding_inst|state.OUTPUT_FULL_2 ; Stuck at GND due to stuck port data_in                 ;
 ; sha256_expand:expand_inst|fifo_wr_ptr[4]        ; Stuck at GND due to stuck port data_in                 ;
-; Total Number of Removed Registers = 9           ;                                                        ;
+; Total Number of Removed Registers = 129         ;                                                        ;
 +-------------------------------------------------+--------------------------------------------------------+
 
 
@@ -268,12 +388,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 13205 ;
+; Total registers                              ; 13083 ;
 ; Number of registers using Synchronous Clear  ; 94    ;
 ; Number of registers using Synchronous Load   ; 760   ;
-; Number of registers using Asynchronous Clear ; 13205 ;
+; Number of registers using Asynchronous Clear ; 13083 ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 13101 ;
+; Number of registers using Clock Enable       ; 12981 ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -516,13 +636,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 13205                       ;
-;     CLR               ; 103                         ;
+; arriav_ff             ; 13083                       ;
+;     CLR               ; 101                         ;
 ;     CLR SCLR          ; 1                           ;
-;     ENA CLR           ; 12248                       ;
+;     ENA CLR           ; 12128                       ;
 ;     ENA CLR SCLR      ; 93                          ;
 ;     ENA CLR SLD       ; 760                         ;
-; arriav_lcell_comb     ; 8679                        ;
+; arriav_lcell_comb     ; 8678                        ;
 ;     arith             ; 545                         ;
 ;         1 data inputs ; 97                          ;
 ;         2 data inputs ; 381                         ;
@@ -530,10 +650,10 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;         5 data inputs ; 64                          ;
 ;     extend            ; 85                          ;
 ;         7 data inputs ; 85                          ;
-;     normal            ; 7921                        ;
+;     normal            ; 7920                        ;
 ;         0 data inputs ; 1                           ;
 ;         1 data inputs ; 376                         ;
-;         2 data inputs ; 619                         ;
+;         2 data inputs ; 618                         ;
 ;         3 data inputs ; 1554                        ;
 ;         4 data inputs ; 484                         ;
 ;         5 data inputs ; 162                         ;
@@ -543,7 +663,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; boundary_port         ; 270                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 10.10                       ;
-; Average LUT depth     ; 3.90                        ;
+; Average LUT depth     ; 3.92                        ;
 +-----------------------+-----------------------------+
 
 
@@ -552,7 +672,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:11     ;
+; Top            ; 00:00:12     ;
 +----------------+--------------+
 
 
@@ -575,7 +695,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: the sole purpose of programming logic devices manufactured by
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details.
-    Info: Processing started: Sun Aug 03 11:18:29 2025
+    Info: Processing started: Sun Aug 03 15:04:46 2025
 Info: Command: quartus_map sha256_top
 Info (20032): Parallel compilation is enabled and will use up to 4 processors
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/tb_sha256_top.v
@@ -589,23 +709,23 @@ Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_compress.v
     Info (12023): Found entity 1: sha256_compress File: E:/VerilogProject/SHA-256/rtl/sha256_compress.v Line: 14
 Info (12127): Elaborating entity "sha256_top" for the top level hierarchy
-Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 73
-Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 83
-Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 94
+Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 68
+Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 78
+Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 89
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 4 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file E:/VerilogProject/SHA-256/output_files/sha256_top.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 19916 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 19793 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
     Info (21059): Implemented 258 output pins
-    Info (21061): Implemented 19646 logic cells
+    Info (21061): Implemented 19523 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4982 megabytes
-    Info: Processing ended: Sun Aug 03 11:18:53 2025
-    Info: Elapsed time: 00:00:24
-    Info: Total CPU time (on all processors): 00:00:19
+    Info: Peak virtual memory: 4985 megabytes
+    Info: Processing ended: Sun Aug 03 15:05:09 2025
+    Info: Elapsed time: 00:00:23
+    Info: Total CPU time (on all processors): 00:00:13
 
 
 +------------------------------------------+

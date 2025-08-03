@@ -13,14 +13,12 @@
 module sha256_top (
     input              clk,
     input              rst_n,
-    input      [  7:0] data_in,          // 输入消息字节
-    input              data_in_valid,    // 输入消息有效信号
-    input              data_last,        // 输入消息最后一个字节标志
-    output reg [255:0] hash_out,         // 输出哈希值
-    output reg         hash_out_valid,   // 哈希输出有效信号
-    output             data_ready        // 模块就绪信号（可接收新输入）
-
-
+    input      [  7:0] data_in,         // 输入消息字节
+    input              data_in_valid,   // 输入消息有效信号
+    input              data_last,       // 输入消息最后一个字节标志
+    output reg [255:0] hash_out,        // 输出哈希值
+    output reg         hash_out_valid,  // 哈希输出有效信号
+    output             data_ready       // 模块就绪信号（可接收新输入）
 );
 
   // =============================================
@@ -52,9 +50,6 @@ module sha256_top (
     32'h1f83d9ab,
     32'h5be0cd19
   };
-
-  // 有效信号流水线寄存器（用于同步）
-  reg [1:0] valid_pipeline;
 
   // =============================================
   // 模块实例化
@@ -102,23 +97,17 @@ module sha256_top (
       intermediate_hash <= INITIAL_HASH;
       hash_out          <= 0;
       hash_out_valid    <= 0;
-      valid_pipeline    <= 0;
+
     end else begin
+      hash_out_valid <= 0;
+
       // 更新中间哈希值
       if (compressed_hash_valid) begin
         intermediate_hash <= compressed_hash;
-      end
-
-      // 输出哈希值（当最后一个块处理完成时）
-      if (compressed_hash_valid && !padded_block_valid) begin
         hash_out <= compressed_hash;
+        hash_out_valid <= 1;
       end
 
-      // 有效信号流水线
-      valid_pipeline <= {valid_pipeline[0], compressed_hash_valid};
-
-      // 哈希输出有效信号（延迟一个周期）
-      hash_out_valid <= valid_pipeline[1];
     end
   end
 
