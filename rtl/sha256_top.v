@@ -13,12 +13,14 @@
 module sha256_top (
     input              clk,
     input              rst_n,
-    input      [  7:0] data_in,         // 输入消息字节
-    input              data_in_valid,   // 输入消息有效信号
-    input              data_last,       // 输入消息最后一个字节标志
-    output reg [255:0] hash_out,        // 输出哈希值
-    output reg         hash_out_valid,  // 哈希输出有效信号
-    output             data_ready       // 模块就绪信号（可接收新输入）
+    input      [  7:0] data_in,          // 输入消息字节
+    input              data_in_valid,    // 输入消息有效信号
+    input              data_last,        // 输入消息最后一个字节标志
+    output reg [255:0] hash_out,         // 输出哈希值
+    output reg         hash_out_valid,   // 哈希输出有效信号
+    output             data_ready        // 模块就绪信号（可接收新输入）
+
+
 );
 
   // =============================================

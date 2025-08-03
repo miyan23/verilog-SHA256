@@ -8,6 +8,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "data_ready",
+					"strict" : false
+				},
+				{
 					"name" : "hash_out[0]",
 					"strict" : false
 				},
@@ -1029,10 +1033,6 @@
 				},
 				{
 					"name" : "hash_out[255]",
-					"strict" : false
-				},
-				{
-					"name" : "data_ready",
 					"strict" : false
 				},
 				{

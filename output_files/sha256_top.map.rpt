@@ -1,5 +1,5 @@
 Analysis & Synthesis report for sha256_top
-Sat Aug 02 22:11:41 2025
+Sun Aug 03 11:18:53 2025
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
 
 
@@ -49,7 +49,7 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Aug 02 22:11:41 2025           ;
+; Analysis & Synthesis Status     ; Successful - Sun Aug 03 11:18:52 2025           ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; sha256_top                                      ;
 ; Top-level Entity Name           ; sha256_top                                      ;
@@ -165,14 +165,14 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.80        ;
+; Average used               ; 1.74        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  26.5%      ;
-;     Processor 3            ;  26.5%      ;
-;     Processor 4            ;  26.5%      ;
+;     Processor 2            ;  24.9%      ;
+;     Processor 3            ;  24.9%      ;
+;     Processor 4            ;  24.7%      ;
 +----------------------------+-------------+
 
 
@@ -193,14 +193,14 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 9146      ;
+; Estimate of Logic utilization (ALMs needed) ; 9152      ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 8704      ;
-;     -- 7 input functions                    ; 64        ;
-;     -- 6 input functions                    ; 4746      ;
-;     -- 5 input functions                    ; 229       ;
-;     -- 4 input functions                    ; 494       ;
-;     -- <=3 input functions                  ; 3171      ;
+; Combinational ALUT usage for logic          ; 8678      ;
+;     -- 7 input functions                    ; 85        ;
+;     -- 6 input functions                    ; 4725      ;
+;     -- 5 input functions                    ; 226       ;
+;     -- 4 input functions                    ; 484       ;
+;     -- <=3 input functions                  ; 3158      ;
 ;                                             ;           ;
 ; Dedicated logic registers                   ; 13205     ;
 ;                                             ;           ;
@@ -210,7 +210,7 @@ refer to the applicable agreement for further details.
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
 ; Maximum fan-out                             ; 13205     ;
-; Total fan-out                               ; 95125     ;
+; Total fan-out                               ; 95048     ;
 ; Average fan-out                             ; 4.24      ;
 +---------------------------------------------+-----------+
 
@@ -220,10 +220,10 @@ refer to the applicable agreement for further details.
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node         ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                       ; Entity Name     ; Library Name ;
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
-; |sha256_top                        ; 8704 (239)          ; 13205 (515)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
+; |sha256_top                        ; 8678 (239)          ; 13205 (515)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
 ;    |sha256_compress:compress_inst| ; 1048 (1048)         ; 777 (777)                 ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_compress:compress_inst ; sha256_compress ; work         ;
 ;    |sha256_expand:expand_inst|     ; 6362 (6362)         ; 10806 (10806)             ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_expand:expand_inst     ; sha256_expand   ; work         ;
-;    |sha256_padding:padding_inst|   ; 1055 (1055)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
+;    |sha256_padding:padding_inst|   ; 1029 (1029)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -409,73 +409,73 @@ Encoding Type:  One-Hot
 ; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[13][31]            ;
 ; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[14][31]            ;
 ; 19:1               ; 32 bits   ; 384 LEs       ; 320 LEs              ; 64 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|W[15][31]            ;
-; 7:1                ; 5 bits    ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|byte_count[4]      ;
-; 9:1                ; 5 bits    ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|fill_pos[5]        ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[501]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[491]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[482]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[477]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[464]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[462]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[450]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[441]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[432]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[426]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[417]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[413]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[403]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[395]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[388]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[382]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[373]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[364]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[358]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[345]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[341]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[334]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[324]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[315]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[306]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[302]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[294]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[285]    ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|byte_count[5]      ;
+; 9:1                ; 5 bits    ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|fill_pos[1]        ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[496]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[494]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[486]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[475]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[470]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[460]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[454]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[443]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[435]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[425]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[420]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[408]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[406]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[393]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[389]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[380]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[368]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[363]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[354]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[350]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[342]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[332]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[323]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[318]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[305]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[298]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[291]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[284]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[277]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[270]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[257]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[249]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[242]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[256]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[254]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[241]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[238]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[230]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[220]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[208]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[206]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[194]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[187]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[221]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[214]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[205]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[193]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[186]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[182]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[173]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[166]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[152]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[172]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[165]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[158]    ;
 ; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[147]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[136]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[130]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[126]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[118]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[107]    ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[96]     ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[88]     ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[80]     ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[78]     ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[68]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[137]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[134]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[123]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[116]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[110]    ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[99]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[92]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[81]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[73]     ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[67]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[60]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[53]     ;
-; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[41]     ;
-; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[36]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[40]     ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[35]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[27]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[20]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[13]     ;
 ; 11:1               ; 7 bits    ; 49 LEs        ; 28 LEs               ; 21 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[4]      ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[506]    ;
-; 13:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; No         ; |sha256_top|sha256_padding:padding_inst|Selector2120       ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |sha256_top|sha256_padding:padding_inst|temp_block[510]    ;
+; 13:1               ; 4 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; No         ; |sha256_top|sha256_padding:padding_inst|Selector2122       ;
 ; 3:1                ; 480 bits  ; 960 LEs       ; 480 LEs              ; 480 LEs                ; Yes        ; |sha256_top|sha256_expand:expand_inst|pipeline_reg[3][15]  ;
 ; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |sha256_top|sha256_expand:expand_inst|pipeline_reg[15][31] ;
 ; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux14                ;
@@ -484,10 +484,10 @@ Encoding Type:  One-Hot
 ; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux63                ;
 ; 3:1                ; 192 bits  ; 384 LEs       ; 0 LEs                ; 384 LEs                ; Yes        ; |sha256_top|sha256_compress:compress_inst|g[0][6]          ;
 ; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |sha256_top|sha256_compress:compress_inst|wt_counter[4]    ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|expand_counter[5]    ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|expand_counter[6]    ;
 ; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_count[4]        ;
 ; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_rd_ptr[3]       ;
-; 7:1                ; 61 bits   ; 244 LEs       ; 61 LEs               ; 183 LEs                ; Yes        ; |sha256_top|sha256_padding:padding_inst|data_length[58]    ;
+; 7:1                ; 61 bits   ; 244 LEs       ; 61 LEs               ; 183 LEs                ; Yes        ; |sha256_top|sha256_padding:padding_inst|data_length[59]    ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------+
 
 
@@ -522,22 +522,22 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA CLR           ; 12248                       ;
 ;     ENA CLR SCLR      ; 93                          ;
 ;     ENA CLR SLD       ; 760                         ;
-; arriav_lcell_comb     ; 8705                        ;
+; arriav_lcell_comb     ; 8679                        ;
 ;     arith             ; 545                         ;
 ;         1 data inputs ; 97                          ;
 ;         2 data inputs ; 381                         ;
 ;         3 data inputs ; 3                           ;
 ;         5 data inputs ; 64                          ;
-;     extend            ; 64                          ;
-;         7 data inputs ; 64                          ;
-;     normal            ; 7968                        ;
+;     extend            ; 85                          ;
+;         7 data inputs ; 85                          ;
+;     normal            ; 7921                        ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 375                         ;
-;         2 data inputs ; 617                         ;
-;         3 data inputs ; 1570                        ;
-;         4 data inputs ; 494                         ;
-;         5 data inputs ; 165                         ;
-;         6 data inputs ; 4746                        ;
+;         1 data inputs ; 376                         ;
+;         2 data inputs ; 619                         ;
+;         3 data inputs ; 1554                        ;
+;         4 data inputs ; 484                         ;
+;         5 data inputs ; 162                         ;
+;         6 data inputs ; 4725                        ;
 ;     shared            ; 128                         ;
 ;         3 data inputs ; 128                         ;
 ; boundary_port         ; 270                         ;
@@ -575,7 +575,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: the sole purpose of programming logic devices manufactured by
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details.
-    Info: Processing started: Sat Aug 02 22:11:19 2025
+    Info: Processing started: Sun Aug 03 11:18:29 2025
 Info: Command: quartus_map sha256_top
 Info (20032): Parallel compilation is enabled and will use up to 4 processors
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/tb_sha256_top.v
@@ -589,23 +589,23 @@ Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_compress.v
     Info (12023): Found entity 1: sha256_compress File: E:/VerilogProject/SHA-256/rtl/sha256_compress.v Line: 14
 Info (12127): Elaborating entity "sha256_top" for the top level hierarchy
-Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 71
-Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 81
-Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 92
+Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 73
+Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 83
+Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 94
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 4 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file E:/VerilogProject/SHA-256/output_files/sha256_top.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 19943 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 19916 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
     Info (21059): Implemented 258 output pins
-    Info (21061): Implemented 19673 logic cells
+    Info (21061): Implemented 19646 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 4982 megabytes
-    Info: Processing ended: Sat Aug 02 22:11:41 2025
-    Info: Elapsed time: 00:00:22
-    Info: Total CPU time (on all processors): 00:00:11
+    Info: Processing ended: Sun Aug 03 11:18:53 2025
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:19
 
 
 +------------------------------------------+

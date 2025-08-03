@@ -29,9 +29,9 @@ module sha256_padding (
   // =============================================
   localparam IDLE = 4'b0000;  // 等待输入
   localparam RECEIVE = 4'b0001;  // 接收输入
-  localparam OUTPUT_FULL_1 = 4'b0010;
-  localparam OUTPUT_FULL_2 = 4'b0011;
-  localparam OUTPUT_FULL_3 = 4'b0100;
+  localparam OUTPUT_FULL_1 = 4'b0010;  //块满（大于等56字节小于64字节-输入结束）
+  localparam OUTPUT_FULL_2 = 4'b0011;  //块满（等于64字节-输入结束）
+  localparam OUTPUT_FULL_3 = 4'b0100;  //块满（等于64字节）
   localparam PAD_1 = 4'b0101;  // 补1
   localparam PAD_0 = 4'b0110;  // 补0
   localparam PAD_LEN = 4'b0111;  // 补长度
@@ -66,8 +66,6 @@ module sha256_padding (
 
       case (state)
         IDLE: begin
-          // 模块就绪，等待有效输入
-          data_ready <= 1;
           if (data_in_valid) begin
             // 处理单字节消息
             if (data_last) begin
@@ -82,8 +80,7 @@ module sha256_padding (
               state                           <= RECEIVE;
               data_length                     <= 64'd8;
               temp_block[511-8*byte_count-:8] <= data_in;
-              byte_count                      <= byte_count + 6'd1;
-              data_ready                      <= (byte_count < 63);
+              byte_count                      <= 1;
             end
           end else if (data_last) begin
             // 处理空消息情况（只有data_last信号）
@@ -98,19 +95,21 @@ module sha256_padding (
             data_length <= data_length + 64'd8;
             temp_block[511-8*byte_count-:8] <= data_in;
             byte_count <= byte_count + 6'd1;
-            data_ready <= (byte_count < 63);
 
             if (data_last) begin
               if (byte_count < 55) begin
                 fill_pos <= byte_count + 6'd1;
-                data_ready <= 0;
                 state <= PAD_1;
+
               end else if (byte_count >= 55 && byte_count < 63) begin
                 temp_block[511-8*(byte_count+1)-:8] <= 8'h80;
                 state <= OUTPUT_FULL_1;
+
               end else if (byte_count == 63) begin
                 state <= OUTPUT_FULL_2;
               end
+
+              data_ready <= 0;
             end
 
             if (byte_count == 63) begin
@@ -126,7 +125,6 @@ module sha256_padding (
           temp_block     <= 0;
           fill_pos       <= 0;
           byte_count     <= 0;
-          data_ready     <= 0;
 
           state          <= PAD_0;
         end
@@ -138,7 +136,6 @@ module sha256_padding (
           temp_block     <= 0;
           fill_pos       <= 0;
           byte_count     <= 0;
-          data_ready     <= 0;
 
           state          <= PAD_1;
         end
@@ -150,7 +147,7 @@ module sha256_padding (
           data_length <= data_length + 64'd8;
           temp_block[511-:8] <= data_in;
           byte_count <= 1;
-          data_ready <= 1;
+
           state <= RECEIVE;
         end
 
@@ -159,17 +156,14 @@ module sha256_padding (
           temp_block[511-8*fill_pos-:8] <= 8'h80;
           fill_pos <= fill_pos + 6'd1;
           state    <= PAD_0;
-          data_ready <= 0;
         end
 
         PAD_0: begin
           if (fill_pos < 56) begin
             temp_block[511-8*fill_pos-:8] <= 8'h00;
             fill_pos <= fill_pos + 6'd1;
-            data_ready <= 0;
           end else begin
             state <= PAD_LEN;
-            data_ready <= 0;
           end
         end
 
@@ -177,7 +171,6 @@ module sha256_padding (
           // 添加消息长度
           temp_block[63:0] <= data_length;
           state <= OUTPUT_LAST;
-          data_ready <= 0;
         end
 
         OUTPUT_LAST: begin
@@ -191,7 +184,7 @@ module sha256_padding (
           fill_pos       <= 0;
           data_length    <= 0;
           state          <= IDLE;
-          data_ready     <= 1;  // 返回就绪状态
+          data_ready     <= 1;
         end
 
         default: begin

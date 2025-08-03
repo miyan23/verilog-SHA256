@@ -19,7 +19,7 @@ module tb_sha256_top ();
   // 测试向量
   reg     [  7:0] test_message                     [0:511];  // 测试消息存储
   integer         message_length;  // 消息长度
-  integer         i;  // 循环计数器
+  integer         i;
 
   // 实例化被测模块
   sha256_top uut (
@@ -69,9 +69,9 @@ module tb_sha256_top ();
     @(posedge clk);
 
     // 发送消息
+    data_in_valid = 1;
     for (i = 0; i < message_length; i = i + 1) begin
-      data_in = test_message[i];
-      data_in_valid = 1;
+      data_in   = test_message[i];
       data_last = (i == message_length - 1);
       @(posedge clk);
     end
@@ -227,9 +227,9 @@ module tb_sha256_top ();
     @(posedge clk);
 
     // 发送消息
+    data_in_valid = 1;
     for (i = 0; i < message_length; i = i + 1) begin
-      data_in = test_message[i];
-      data_in_valid = 1;
+      data_in   = test_message[i];
       data_last = (i == message_length - 1);
       @(posedge clk);
     end
@@ -397,9 +397,9 @@ module tb_sha256_top ();
     @(posedge clk);
 
     // 发送消息
+    data_in_valid = 1;
     for (i = 0; i < message_length; i = i + 1) begin
-      data_in = test_message[i];
-      data_in_valid = 1;
+      data_in   = test_message[i];
       data_last = (i == message_length - 1);
       @(posedge clk);
     end
@@ -451,9 +451,9 @@ module tb_sha256_top ();
     @(posedge clk);
 
     // 发送消息
+    data_in_valid = 1;
     for (i = 0; i < 1000; i = i + 1) begin
-      data_in = "a";
-      data_in_valid = 1;
+      data_in   = "a";
       data_last = (i == 1000 - 1);
       @(posedge clk);
     end

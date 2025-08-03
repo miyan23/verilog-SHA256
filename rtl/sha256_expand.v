@@ -35,6 +35,7 @@ module sha256_expand (
   reg     [  4:0] fifo_rd_ptr;  // FIFO读指针
   reg     [  4:0] fifo_count;  // FIFO中有效块数
 
+  // for循环变量
   integer         i;
   integer         t;
 
@@ -85,9 +86,10 @@ module sha256_expand (
       // ------------------------------
       if (block_valid && fifo_count < FIFO_DEPTH) begin
         fifo[fifo_wr_ptr] <= block_in;
+        fifo_count <= fifo_count + 5'd1;
+
         // 写指针绕回处理
         fifo_wr_ptr <= (fifo_wr_ptr == FIFO_DEPTH - 1) ? 5'd0 : fifo_wr_ptr + 5'd1;
-        fifo_count <= fifo_count + 5'd1;
       end
 
       // ------------------------------
@@ -107,9 +109,12 @@ module sha256_expand (
           end
 
           if (expand_counter < 80) begin
-            pipeline_reg[15] <= W[expand_counter-16];  // 延迟16周期
+            // 延迟16周期
+            pipeline_reg[15] <= W[expand_counter-16];
+
           end else begin
-            pipeline_reg[15] <= 0;  // 超出范围时清零
+            // 超出范围时清零
+            pipeline_reg[15] <= 0;
           end
 
           // 输出当前Wt
@@ -140,6 +145,7 @@ module sha256_expand (
             fifo_count <= fifo_count - 5'd1;
           end
         end
+        
       end else if (fifo_count > 0) begin
         // 当前无处理块且FIFO不为空，开始处理下一个块
         for (t = 0; t < 16; t = t + 1) begin
