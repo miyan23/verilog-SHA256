@@ -1,5 +1,5 @@
 Flow report for sha256_top
-Sun Aug 03 15:05:09 2025
+Sun Aug 03 21:16:53 2025
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
 
 
@@ -40,7 +40,7 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Sun Aug 03 15:05:09 2025           ;
+; Flow Status                     ; Successful - Sun Aug 03 21:16:53 2025           ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; sha256_top                                      ;
 ; Top-level Entity Name           ; sha256_top                                      ;
@@ -48,8 +48,8 @@ refer to the applicable agreement for further details.
 ; Device                          ; 5CGXFC7C7F23C8                                  ;
 ; Timing Models                   ; Final                                           ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 13083                                           ;
-; Total pins                      ; 270                                             ;
+; Total registers                 ; 12964                                           ;
+; Total pins                      ; 24                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 0                                               ;
 ; Total DSP Blocks                ; 0                                               ;
@@ -67,7 +67,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 08/03/2025 15:04:46 ;
+; Start date & time ; 08/03/2025 21:16:29 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; sha256_top          ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ refer to the applicable agreement for further details.
 +-------------------------------+---------------------------------------+---------------+-------------+----------------+
 ; Assignment Name               ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------+---------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID         ; 145862329298666.175420468609472       ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID         ; 145862329298666.175422698916652       ; --            ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT        ; Verilog Hdl                           ; --            ; --          ; eda_simulation ;
 ; EDA_SIMULATION_TOOL           ; ModelSim (Verilog)                    ; <None>        ; --          ; --             ;
 ; EDA_TIME_SCALE                ; 1 ps                                  ; --            ; --          ; eda_simulation ;
@@ -96,8 +96,8 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:22     ; 1.8                     ; 4985 MB             ; 00:00:11                           ;
-; Total                ; 00:00:22     ; --                      ; --                  ; 00:00:11                           ;
+; Analysis & Synthesis ; 00:00:23     ; 1.8                     ; 4983 MB             ; 00:00:13                           ;
+; Total                ; 00:00:23     ; --                      ; --                  ; 00:00:13                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

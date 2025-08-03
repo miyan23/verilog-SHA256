@@ -1,5 +1,5 @@
 Analysis & Synthesis report for sha256_top
-Sun Aug 03 15:05:09 2025
+Sun Aug 03 21:16:53 2025
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
 
 
@@ -49,14 +49,14 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Aug 03 15:05:09 2025           ;
+; Analysis & Synthesis Status     ; Successful - Sun Aug 03 21:16:53 2025           ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; sha256_top                                      ;
 ; Top-level Entity Name           ; sha256_top                                      ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 13083                                           ;
-; Total pins                      ; 270                                             ;
+; Total registers                 ; 12964                                           ;
+; Total pins                      ; 24                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 0                                               ;
 ; Total DSP Blocks                ; 0                                               ;
@@ -193,25 +193,25 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 9091      ;
+; Estimate of Logic utilization (ALMs needed) ; 9072      ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 8677      ;
+; Combinational ALUT usage for logic          ; 8777      ;
 ;     -- 7 input functions                    ; 85        ;
-;     -- 6 input functions                    ; 4725      ;
+;     -- 6 input functions                    ; 4807      ;
 ;     -- 5 input functions                    ; 226       ;
-;     -- 4 input functions                    ; 484       ;
-;     -- <=3 input functions                  ; 3157      ;
+;     -- 4 input functions                    ; 488       ;
+;     -- <=3 input functions                  ; 3171      ;
 ;                                             ;           ;
-; Dedicated logic registers                   ; 13083     ;
+; Dedicated logic registers                   ; 12964     ;
 ;                                             ;           ;
-; I/O pins                                    ; 270       ;
+; I/O pins                                    ; 24        ;
 ;                                             ;           ;
 ; Total DSP Blocks                            ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 13083     ;
-; Total fan-out                               ; 94560     ;
-; Average fan-out                             ; 4.24      ;
+; Maximum fan-out                             ; 12964     ;
+; Total fan-out                               ; 94133     ;
+; Average fan-out                             ; 4.32      ;
 +---------------------------------------------+-----------+
 
 
@@ -220,10 +220,10 @@ refer to the applicable agreement for further details.
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node         ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                       ; Entity Name     ; Library Name ;
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
-; |sha256_top                        ; 8677 (238)          ; 13083 (393)               ; 0                 ; 0          ; 270  ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
+; |sha256_top                        ; 8777 (339)          ; 12964 (274)               ; 0                 ; 0          ; 24   ; 0            ; |sha256_top                               ; sha256_top      ; work         ;
 ;    |sha256_compress:compress_inst| ; 1048 (1048)         ; 777 (777)                 ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_compress:compress_inst ; sha256_compress ; work         ;
 ;    |sha256_expand:expand_inst|     ; 6362 (6362)         ; 10806 (10806)             ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_expand:expand_inst     ; sha256_expand   ; work         ;
-;    |sha256_padding:padding_inst|   ; 1029 (1029)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
+;    |sha256_padding:padding_inst|   ; 1028 (1028)         ; 1107 (1107)               ; 0                 ; 0          ; 0    ; 0            ; |sha256_top|sha256_padding:padding_inst   ; sha256_padding  ; work         ;
 +------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -252,126 +252,6 @@ Encoding Type:  One-Hot
 ; Register name                                   ; Reason for Removal                                     ;
 +-------------------------------------------------+--------------------------------------------------------+
 ; sha256_padding:padding_inst|data_length[1,2]    ; Merged with sha256_padding:padding_inst|data_length[0] ;
-; hash_out[255]~reg0                              ; Merged with intermediate_hash[255]                     ;
-; hash_out[252]~reg0                              ; Merged with intermediate_hash[252]                     ;
-; hash_out[250]~reg0                              ; Merged with intermediate_hash[250]                     ;
-; hash_out[248]~reg0                              ; Merged with intermediate_hash[248]                     ;
-; hash_out[247]~reg0                              ; Merged with intermediate_hash[247]                     ;
-; hash_out[246]~reg0                              ; Merged with intermediate_hash[246]                     ;
-; hash_out[245]~reg0                              ; Merged with intermediate_hash[245]                     ;
-; hash_out[244]~reg0                              ; Merged with intermediate_hash[244]                     ;
-; hash_out[242]~reg0                              ; Merged with intermediate_hash[242]                     ;
-; hash_out[241]~reg0                              ; Merged with intermediate_hash[241]                     ;
-; hash_out[236]~reg0                              ; Merged with intermediate_hash[236]                     ;
-; hash_out[235]~reg0                              ; Merged with intermediate_hash[235]                     ;
-; hash_out[232]~reg0                              ; Merged with intermediate_hash[232]                     ;
-; hash_out[231]~reg0                              ; Merged with intermediate_hash[231]                     ;
-; hash_out[228]~reg0                              ; Merged with intermediate_hash[228]                     ;
-; hash_out[227]~reg0                              ; Merged with intermediate_hash[227]                     ;
-; hash_out[222]~reg0                              ; Merged with intermediate_hash[222]                     ;
-; hash_out[218]~reg0                              ; Merged with intermediate_hash[218]                     ;
-; hash_out[215]~reg0                              ; Merged with intermediate_hash[215]                     ;
-; hash_out[212]~reg0                              ; Merged with intermediate_hash[212]                     ;
-; hash_out[211]~reg0                              ; Merged with intermediate_hash[211]                     ;
-; hash_out[206]~reg0                              ; Merged with intermediate_hash[206]                     ;
-; hash_out[204]~reg0                              ; Merged with intermediate_hash[204]                     ;
-; hash_out[200]~reg0                              ; Merged with intermediate_hash[200]                     ;
-; hash_out[198]~reg0                              ; Merged with intermediate_hash[198]                     ;
-; hash_out[197]~reg0                              ; Merged with intermediate_hash[197]                     ;
-; hash_out[196]~reg0                              ; Merged with intermediate_hash[196]                     ;
-; hash_out[195]~reg0                              ; Merged with intermediate_hash[195]                     ;
-; hash_out[193]~reg0                              ; Merged with intermediate_hash[193]                     ;
-; hash_out[191]~reg0                              ; Merged with intermediate_hash[191]                     ;
-; hash_out[190]~reg0                              ; Merged with intermediate_hash[190]                     ;
-; hash_out[185]~reg0                              ; Merged with intermediate_hash[185]                     ;
-; hash_out[184]~reg0                              ; Merged with intermediate_hash[184]                     ;
-; hash_out[183]~reg0                              ; Merged with intermediate_hash[183]                     ;
-; hash_out[180]~reg0                              ; Merged with intermediate_hash[180]                     ;
-; hash_out[176]~reg0                              ; Merged with intermediate_hash[176]                     ;
-; hash_out[171]~reg0                              ; Merged with intermediate_hash[171]                     ;
-; hash_out[170]~reg0                              ; Merged with intermediate_hash[170]                     ;
-; hash_out[167]~reg0                              ; Merged with intermediate_hash[167]                     ;
-; hash_out[163]~reg0                              ; Merged with intermediate_hash[163]                     ;
-; hash_out[162]~reg0                              ; Merged with intermediate_hash[162]                     ;
-; hash_out[160]~reg0                              ; Merged with intermediate_hash[160]                     ;
-; hash_out[158]~reg0                              ; Merged with intermediate_hash[158]                     ;
-; hash_out[156]~reg0                              ; Merged with intermediate_hash[156]                     ;
-; hash_out[155]~reg0                              ; Merged with intermediate_hash[155]                     ;
-; hash_out[153]~reg0                              ; Merged with intermediate_hash[153]                     ;
-; hash_out[151]~reg0                              ; Merged with intermediate_hash[151]                     ;
-; hash_out[149]~reg0                              ; Merged with intermediate_hash[149]                     ;
-; hash_out[148]~reg0                              ; Merged with intermediate_hash[148]                     ;
-; hash_out[139]~reg0                              ; Merged with intermediate_hash[139]                     ;
-; hash_out[137]~reg0                              ; Merged with intermediate_hash[137]                     ;
-; hash_out[135]~reg0                              ; Merged with intermediate_hash[135]                     ;
-; hash_out[134]~reg0                              ; Merged with intermediate_hash[134]                     ;
-; hash_out[130]~reg0                              ; Merged with intermediate_hash[130]                     ;
-; hash_out[128]~reg0                              ; Merged with intermediate_hash[128]                     ;
-; hash_out[127]~reg0                              ; Merged with intermediate_hash[127]                     ;
-; hash_out[125]~reg0                              ; Merged with intermediate_hash[125]                     ;
-; hash_out[123]~reg0                              ; Merged with intermediate_hash[123]                     ;
-; hash_out[122]~reg0                              ; Merged with intermediate_hash[122]                     ;
-; hash_out[121]~reg0                              ; Merged with intermediate_hash[121]                     ;
-; hash_out[119]~reg0                              ; Merged with intermediate_hash[119]                     ;
-; hash_out[118]~reg0                              ; Merged with intermediate_hash[118]                     ;
-; hash_out[117]~reg0                              ; Merged with intermediate_hash[117]                     ;
-; hash_out[116]~reg0                              ; Merged with intermediate_hash[116]                     ;
-; hash_out[112]~reg0                              ; Merged with intermediate_hash[112]                     ;
-; hash_out[111]~reg0                              ; Merged with intermediate_hash[111]                     ;
-; hash_out[109]~reg0                              ; Merged with intermediate_hash[109]                     ;
-; hash_out[107]~reg0                              ; Merged with intermediate_hash[107]                     ;
-; hash_out[106]~reg0                              ; Merged with intermediate_hash[106]                     ;
-; hash_out[104]~reg0                              ; Merged with intermediate_hash[104]                     ;
-; hash_out[103]~reg0                              ; Merged with intermediate_hash[103]                     ;
-; hash_out[94]~reg0                               ; Merged with intermediate_hash[94]                      ;
-; hash_out[93]~reg0                               ; Merged with intermediate_hash[93]                      ;
-; hash_out[90]~reg0                               ; Merged with intermediate_hash[90]                      ;
-; hash_out[87]~reg0                               ; Merged with intermediate_hash[87]                      ;
-; hash_out[86]~reg0                               ; Merged with intermediate_hash[86]                      ;
-; hash_out[85]~reg0                               ; Merged with intermediate_hash[85]                      ;
-; hash_out[84]~reg0                               ; Merged with intermediate_hash[84]                      ;
-; hash_out[83]~reg0                               ; Merged with intermediate_hash[83]                      ;
-; hash_out[81]~reg0                               ; Merged with intermediate_hash[81]                      ;
-; hash_out[79]~reg0                               ; Merged with intermediate_hash[79]                      ;
-; hash_out[76]~reg0                               ; Merged with intermediate_hash[76]                      ;
-; hash_out[74]~reg0                               ; Merged with intermediate_hash[74]                      ;
-; hash_out[73]~reg0                               ; Merged with intermediate_hash[73]                      ;
-; hash_out[72]~reg0                               ; Merged with intermediate_hash[72]                      ;
-; hash_out[70]~reg0                               ; Merged with intermediate_hash[70]                      ;
-; hash_out[69]~reg0                               ; Merged with intermediate_hash[69]                      ;
-; hash_out[68]~reg0                               ; Merged with intermediate_hash[68]                      ;
-; hash_out[65]~reg0                               ; Merged with intermediate_hash[65]                      ;
-; hash_out[64]~reg0                               ; Merged with intermediate_hash[64]                      ;
-; hash_out[63]~reg0                               ; Merged with intermediate_hash[63]                      ;
-; hash_out[62]~reg0                               ; Merged with intermediate_hash[62]                      ;
-; hash_out[61]~reg0                               ; Merged with intermediate_hash[61]                      ;
-; hash_out[54]~reg0                               ; Merged with intermediate_hash[54]                      ;
-; hash_out[53]~reg0                               ; Merged with intermediate_hash[53]                      ;
-; hash_out[52]~reg0                               ; Merged with intermediate_hash[52]                      ;
-; hash_out[51]~reg0                               ; Merged with intermediate_hash[51]                      ;
-; hash_out[50]~reg0                               ; Merged with intermediate_hash[50]                      ;
-; hash_out[45]~reg0                               ; Merged with intermediate_hash[45]                      ;
-; hash_out[42]~reg0                               ; Merged with intermediate_hash[42]                      ;
-; hash_out[41]~reg0                               ; Merged with intermediate_hash[41]                      ;
-; hash_out[38]~reg0                               ; Merged with intermediate_hash[38]                      ;
-; hash_out[36]~reg0                               ; Merged with intermediate_hash[36]                      ;
-; hash_out[34]~reg0                               ; Merged with intermediate_hash[34]                      ;
-; hash_out[31]~reg0                               ; Merged with intermediate_hash[31]                      ;
-; hash_out[29]~reg0                               ; Merged with intermediate_hash[29]                      ;
-; hash_out[26]~reg0                               ; Merged with intermediate_hash[26]                      ;
-; hash_out[20]~reg0                               ; Merged with intermediate_hash[20]                      ;
-; hash_out[19]~reg0                               ; Merged with intermediate_hash[19]                      ;
-; hash_out[18]~reg0                               ; Merged with intermediate_hash[18]                      ;
-; hash_out[17]~reg0                               ; Merged with intermediate_hash[17]                      ;
-; hash_out[16]~reg0                               ; Merged with intermediate_hash[16]                      ;
-; hash_out[13]~reg0                               ; Merged with intermediate_hash[13]                      ;
-; hash_out[12]~reg0                               ; Merged with intermediate_hash[12]                      ;
-; hash_out[9]~reg0                                ; Merged with intermediate_hash[9]                       ;
-; hash_out[7]~reg0                                ; Merged with intermediate_hash[7]                       ;
-; hash_out[6]~reg0                                ; Merged with intermediate_hash[6]                       ;
-; hash_out[5]~reg0                                ; Merged with intermediate_hash[5]                       ;
-; hash_out[2]~reg0                                ; Merged with intermediate_hash[2]                       ;
-; hash_out[1]~reg0                                ; Merged with intermediate_hash[1]                       ;
 ; sha256_padding:padding_inst|data_length[0]      ; Stuck at GND due to stuck port data_in                 ;
 ; sha256_expand:expand_inst|fifo_rd_ptr[4]        ; Lost fanout                                            ;
 ; sha256_padding:padding_inst|state~13            ; Lost fanout                                            ;
@@ -379,7 +259,7 @@ Encoding Type:  One-Hot
 ; sha256_padding:padding_inst|state~15            ; Lost fanout                                            ;
 ; sha256_padding:padding_inst|state.OUTPUT_FULL_2 ; Stuck at GND due to stuck port data_in                 ;
 ; sha256_expand:expand_inst|fifo_wr_ptr[4]        ; Stuck at GND due to stuck port data_in                 ;
-; Total Number of Removed Registers = 129         ;                                                        ;
+; Total Number of Removed Registers = 9           ;                                                        ;
 +-------------------------------------------------+--------------------------------------------------------+
 
 
@@ -388,12 +268,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 13083 ;
+; Total registers                              ; 12964 ;
 ; Number of registers using Synchronous Clear  ; 94    ;
 ; Number of registers using Synchronous Load   ; 760   ;
-; Number of registers using Asynchronous Clear ; 13083 ;
+; Number of registers using Asynchronous Clear ; 12964 ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 12981 ;
+; Number of registers using Clock Enable       ; 12853 ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -404,105 +284,105 @@ Encoding Type:  One-Hot
 ; Inverted Register                         ; Fan out ;
 +-------------------------------------------+---------+
 ; sha256_padding:padding_inst|data_ready    ; 2       ;
-; intermediate_hash[32]                     ; 3       ;
-; intermediate_hash[0]                      ; 2       ;
-; intermediate_hash[33]                     ; 3       ;
-; intermediate_hash[35]                     ; 3       ;
-; intermediate_hash[3]                      ; 2       ;
-; intermediate_hash[4]                      ; 2       ;
-; intermediate_hash[37]                     ; 3       ;
-; intermediate_hash[39]                     ; 3       ;
-; intermediate_hash[40]                     ; 3       ;
-; intermediate_hash[8]                      ; 2       ;
-; intermediate_hash[10]                     ; 2       ;
-; intermediate_hash[43]                     ; 3       ;
-; intermediate_hash[11]                     ; 2       ;
-; intermediate_hash[44]                     ; 3       ;
-; intermediate_hash[46]                     ; 3       ;
-; intermediate_hash[14]                     ; 2       ;
-; intermediate_hash[47]                     ; 3       ;
-; intermediate_hash[15]                     ; 2       ;
-; intermediate_hash[48]                     ; 3       ;
-; intermediate_hash[49]                     ; 3       ;
-; intermediate_hash[21]                     ; 2       ;
-; intermediate_hash[22]                     ; 2       ;
-; intermediate_hash[55]                     ; 3       ;
-; intermediate_hash[23]                     ; 2       ;
-; intermediate_hash[56]                     ; 3       ;
-; intermediate_hash[24]                     ; 2       ;
-; intermediate_hash[57]                     ; 3       ;
-; intermediate_hash[25]                     ; 2       ;
-; intermediate_hash[58]                     ; 3       ;
-; intermediate_hash[59]                     ; 3       ;
-; intermediate_hash[27]                     ; 2       ;
-; intermediate_hash[60]                     ; 3       ;
-; intermediate_hash[28]                     ; 2       ;
-; intermediate_hash[30]                     ; 2       ;
-; intermediate_hash[66]                     ; 3       ;
-; intermediate_hash[67]                     ; 3       ;
-; intermediate_hash[71]                     ; 3       ;
-; intermediate_hash[75]                     ; 3       ;
-; intermediate_hash[77]                     ; 3       ;
-; intermediate_hash[78]                     ; 3       ;
-; intermediate_hash[80]                     ; 3       ;
-; intermediate_hash[82]                     ; 3       ;
-; intermediate_hash[88]                     ; 3       ;
-; intermediate_hash[89]                     ; 3       ;
-; intermediate_hash[91]                     ; 3       ;
-; intermediate_hash[92]                     ; 3       ;
-; intermediate_hash[95]                     ; 3       ;
-; intermediate_hash[96]                     ; 6       ;
-; intermediate_hash[97]                     ; 6       ;
-; intermediate_hash[98]                     ; 6       ;
-; intermediate_hash[99]                     ; 6       ;
-; intermediate_hash[100]                    ; 6       ;
-; intermediate_hash[101]                    ; 6       ;
-; intermediate_hash[102]                    ; 6       ;
-; intermediate_hash[105]                    ; 6       ;
-; intermediate_hash[108]                    ; 6       ;
-; intermediate_hash[110]                    ; 6       ;
-; intermediate_hash[113]                    ; 6       ;
-; intermediate_hash[114]                    ; 6       ;
-; intermediate_hash[115]                    ; 6       ;
-; intermediate_hash[120]                    ; 6       ;
-; intermediate_hash[124]                    ; 6       ;
-; intermediate_hash[126]                    ; 6       ;
-; intermediate_hash[161]                    ; 3       ;
-; intermediate_hash[129]                    ; 2       ;
-; intermediate_hash[131]                    ; 2       ;
-; intermediate_hash[164]                    ; 3       ;
-; intermediate_hash[132]                    ; 2       ;
-; intermediate_hash[165]                    ; 3       ;
-; intermediate_hash[133]                    ; 2       ;
-; intermediate_hash[166]                    ; 3       ;
-; intermediate_hash[168]                    ; 3       ;
-; intermediate_hash[136]                    ; 2       ;
-; intermediate_hash[169]                    ; 3       ;
-; intermediate_hash[138]                    ; 2       ;
-; intermediate_hash[172]                    ; 3       ;
-; intermediate_hash[140]                    ; 2       ;
-; intermediate_hash[173]                    ; 3       ;
-; intermediate_hash[141]                    ; 2       ;
-; intermediate_hash[174]                    ; 3       ;
-; intermediate_hash[142]                    ; 2       ;
-; intermediate_hash[175]                    ; 3       ;
-; intermediate_hash[143]                    ; 2       ;
-; intermediate_hash[144]                    ; 2       ;
-; intermediate_hash[177]                    ; 3       ;
-; intermediate_hash[145]                    ; 2       ;
-; intermediate_hash[178]                    ; 3       ;
-; intermediate_hash[146]                    ; 2       ;
-; intermediate_hash[179]                    ; 3       ;
-; intermediate_hash[147]                    ; 2       ;
-; intermediate_hash[181]                    ; 3       ;
-; intermediate_hash[182]                    ; 3       ;
-; intermediate_hash[150]                    ; 2       ;
-; intermediate_hash[152]                    ; 2       ;
-; intermediate_hash[186]                    ; 3       ;
-; intermediate_hash[154]                    ; 2       ;
-; intermediate_hash[187]                    ; 3       ;
-; intermediate_hash[188]                    ; 3       ;
-; intermediate_hash[189]                    ; 3       ;
+; intermediate_hash[120]                    ; 7       ;
+; intermediate_hash[88]                     ; 4       ;
+; intermediate_hash[56]                     ; 4       ;
+; intermediate_hash[24]                     ; 3       ;
+; intermediate_hash[40]                     ; 4       ;
+; intermediate_hash[8]                      ; 3       ;
+; intermediate_hash[80]                     ; 4       ;
+; intermediate_hash[48]                     ; 4       ;
+; intermediate_hash[96]                     ; 7       ;
+; intermediate_hash[32]                     ; 4       ;
+; intermediate_hash[0]                      ; 3       ;
+; intermediate_hash[168]                    ; 4       ;
+; intermediate_hash[152]                    ; 3       ;
+; intermediate_hash[136]                    ; 3       ;
+; intermediate_hash[144]                    ; 3       ;
+; intermediate_hash[240]                    ; 7       ;
+; intermediate_hash[224]                    ; 7       ;
+; intermediate_hash[216]                    ; 4       ;
+; intermediate_hash[208]                    ; 4       ;
+; intermediate_hash[192]                    ; 4       ;
+; intermediate_hash[89]                     ; 4       ;
+; intermediate_hash[57]                     ; 4       ;
+; intermediate_hash[25]                     ; 3       ;
+; intermediate_hash[105]                    ; 7       ;
+; intermediate_hash[113]                    ; 7       ;
+; intermediate_hash[49]                     ; 4       ;
+; intermediate_hash[97]                     ; 7       ;
+; intermediate_hash[33]                     ; 4       ;
+; intermediate_hash[169]                    ; 4       ;
+; intermediate_hash[177]                    ; 4       ;
+; intermediate_hash[161]                    ; 4       ;
+; intermediate_hash[145]                    ; 3       ;
+; intermediate_hash[129]                    ; 3       ;
+; intermediate_hash[249]                    ; 7       ;
+; intermediate_hash[233]                    ; 7       ;
+; intermediate_hash[225]                    ; 7       ;
+; intermediate_hash[217]                    ; 4       ;
+; intermediate_hash[201]                    ; 4       ;
+; intermediate_hash[209]                    ; 4       ;
+; intermediate_hash[58]                     ; 4       ;
+; intermediate_hash[10]                     ; 3       ;
+; intermediate_hash[114]                    ; 7       ;
+; intermediate_hash[82]                     ; 4       ;
+; intermediate_hash[98]                     ; 7       ;
+; intermediate_hash[66]                     ; 4       ;
+; intermediate_hash[186]                    ; 4       ;
+; intermediate_hash[178]                    ; 4       ;
+; intermediate_hash[154]                    ; 3       ;
+; intermediate_hash[138]                    ; 3       ;
+; intermediate_hash[146]                    ; 3       ;
+; intermediate_hash[234]                    ; 7       ;
+; intermediate_hash[226]                    ; 7       ;
+; intermediate_hash[202]                    ; 4       ;
+; intermediate_hash[210]                    ; 4       ;
+; intermediate_hash[194]                    ; 4       ;
+; intermediate_hash[91]                     ; 4       ;
+; intermediate_hash[59]                     ; 4       ;
+; intermediate_hash[27]                     ; 3       ;
+; intermediate_hash[75]                     ; 4       ;
+; intermediate_hash[43]                     ; 4       ;
+; intermediate_hash[11]                     ; 3       ;
+; intermediate_hash[115]                    ; 7       ;
+; intermediate_hash[99]                     ; 7       ;
+; intermediate_hash[67]                     ; 4       ;
+; intermediate_hash[35]                     ; 4       ;
+; intermediate_hash[3]                      ; 3       ;
+; intermediate_hash[187]                    ; 4       ;
+; intermediate_hash[179]                    ; 4       ;
+; intermediate_hash[147]                    ; 3       ;
+; intermediate_hash[131]                    ; 3       ;
+; intermediate_hash[251]                    ; 7       ;
+; intermediate_hash[243]                    ; 7       ;
+; intermediate_hash[219]                    ; 4       ;
+; intermediate_hash[203]                    ; 4       ;
+; intermediate_hash[124]                    ; 7       ;
+; intermediate_hash[92]                     ; 4       ;
+; intermediate_hash[60]                     ; 4       ;
+; intermediate_hash[28]                     ; 3       ;
+; intermediate_hash[108]                    ; 7       ;
+; intermediate_hash[44]                     ; 4       ;
+; intermediate_hash[100]                    ; 7       ;
+; intermediate_hash[4]                      ; 3       ;
+; intermediate_hash[188]                    ; 4       ;
+; intermediate_hash[172]                    ; 4       ;
+; intermediate_hash[164]                    ; 4       ;
+; intermediate_hash[140]                    ; 3       ;
+; intermediate_hash[132]                    ; 3       ;
+; intermediate_hash[220]                    ; 4       ;
+; intermediate_hash[77]                     ; 4       ;
+; intermediate_hash[21]                     ; 3       ;
+; intermediate_hash[101]                    ; 7       ;
+; intermediate_hash[37]                     ; 4       ;
+; intermediate_hash[189]                    ; 4       ;
+; intermediate_hash[173]                    ; 4       ;
+; intermediate_hash[181]                    ; 4       ;
+; intermediate_hash[165]                    ; 4       ;
+; intermediate_hash[157]                    ; 3       ;
+; intermediate_hash[141]                    ; 3       ;
+; intermediate_hash[133]                    ; 3       ;
 ; Total number of inverted registers = 137* ;         ;
 +-------------------------------------------+---------+
 * Table truncated at 100 items. To change the number of inverted registers reported, set the "Number of Inverted Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
@@ -602,12 +482,14 @@ Encoding Type:  One-Hot
 ; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux111               ;
 ; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux92                ;
 ; 64:1               ; 32 bits   ; 1344 LEs      ; 1344 LEs             ; 0 LEs                  ; No         ; |sha256_top|sha256_expand:expand_inst|Mux63                ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|expand_counter[5]    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_count[2]        ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_rd_ptr[3]       ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |sha256_top|byte_counter[5]                                ;
+; 64:1               ; 8 bits    ; 336 LEs       ; 168 LEs              ; 168 LEs                ; Yes        ; |sha256_top|hash_byte_out[0]~reg0                          ;
+; 7:1                ; 61 bits   ; 244 LEs       ; 61 LEs               ; 183 LEs                ; Yes        ; |sha256_top|sha256_padding:padding_inst|data_length[52]    ;
 ; 3:1                ; 192 bits  ; 384 LEs       ; 0 LEs                ; 384 LEs                ; Yes        ; |sha256_top|sha256_compress:compress_inst|g[0][6]          ;
 ; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |sha256_top|sha256_compress:compress_inst|wt_counter[4]    ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|expand_counter[6]    ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_count[4]        ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |sha256_top|sha256_expand:expand_inst|fifo_rd_ptr[3]       ;
-; 7:1                ; 61 bits   ; 244 LEs       ; 61 LEs               ; 183 LEs                ; Yes        ; |sha256_top|sha256_padding:padding_inst|data_length[59]    ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------+
 
 
@@ -636,13 +518,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 13083                       ;
-;     CLR               ; 101                         ;
+; arriav_ff             ; 12964                       ;
+;     CLR               ; 110                         ;
 ;     CLR SCLR          ; 1                           ;
-;     ENA CLR           ; 12128                       ;
+;     ENA CLR           ; 12000                       ;
 ;     ENA CLR SCLR      ; 93                          ;
 ;     ENA CLR SLD       ; 760                         ;
-; arriav_lcell_comb     ; 8678                        ;
+; arriav_lcell_comb     ; 8778                        ;
 ;     arith             ; 545                         ;
 ;         1 data inputs ; 97                          ;
 ;         2 data inputs ; 381                         ;
@@ -650,20 +532,20 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;         5 data inputs ; 64                          ;
 ;     extend            ; 85                          ;
 ;         7 data inputs ; 85                          ;
-;     normal            ; 7920                        ;
+;     normal            ; 8020                        ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 376                         ;
-;         2 data inputs ; 618                         ;
-;         3 data inputs ; 1554                        ;
-;         4 data inputs ; 484                         ;
+;         1 data inputs ; 375                         ;
+;         2 data inputs ; 620                         ;
+;         3 data inputs ; 1567                        ;
+;         4 data inputs ; 488                         ;
 ;         5 data inputs ; 162                         ;
-;         6 data inputs ; 4725                        ;
+;         6 data inputs ; 4807                        ;
 ;     shared            ; 128                         ;
 ;         3 data inputs ; 128                         ;
-; boundary_port         ; 270                         ;
+; boundary_port         ; 24                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 10.10                       ;
-; Average LUT depth     ; 3.92                        ;
+; Average LUT depth     ; 3.94                        ;
 +-----------------------+-----------------------------+
 
 
@@ -695,13 +577,13 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: the sole purpose of programming logic devices manufactured by
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details.
-    Info: Processing started: Sun Aug 03 15:04:46 2025
+    Info: Processing started: Sun Aug 03 21:16:29 2025
 Info: Command: quartus_map sha256_top
 Info (20032): Parallel compilation is enabled and will use up to 4 processors
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/tb_sha256_top.v
     Info (12023): Found entity 1: tb_sha256_top File: E:/VerilogProject/SHA-256/rtl/tb_sha256_top.v Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_top.v
-    Info (12023): Found entity 1: sha256_top File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 13
+    Info (12023): Found entity 1: sha256_top File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 14
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_padding.v
     Info (12023): Found entity 1: sha256_padding File: E:/VerilogProject/SHA-256/rtl/sha256_padding.v Line: 16
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_expand.v
@@ -709,23 +591,23 @@ Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sha256_compress.v
     Info (12023): Found entity 1: sha256_compress File: E:/VerilogProject/SHA-256/rtl/sha256_compress.v Line: 14
 Info (12127): Elaborating entity "sha256_top" for the top level hierarchy
-Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 68
-Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 78
-Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 89
+Info (12128): Elaborating entity "sha256_padding" for hierarchy "sha256_padding:padding_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 76
+Info (12128): Elaborating entity "sha256_expand" for hierarchy "sha256_expand:expand_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 86
+Info (12128): Elaborating entity "sha256_compress" for hierarchy "sha256_compress:compress_inst" File: E:/VerilogProject/SHA-256/rtl/sha256_top.v Line: 97
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 4 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file E:/VerilogProject/SHA-256/output_files/sha256_top.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 19793 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 19514 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
-    Info (21059): Implemented 258 output pins
-    Info (21061): Implemented 19523 logic cells
+    Info (21059): Implemented 12 output pins
+    Info (21061): Implemented 19490 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4985 megabytes
-    Info: Processing ended: Sun Aug 03 15:05:09 2025
-    Info: Elapsed time: 00:00:23
-    Info: Total CPU time (on all processors): 00:00:13
+    Info: Peak virtual memory: 4983 megabytes
+    Info: Processing ended: Sun Aug 03 21:16:54 2025
+    Info: Elapsed time: 00:00:25
+    Info: Total CPU time (on all processors): 00:00:15
 
 
 +------------------------------------------+

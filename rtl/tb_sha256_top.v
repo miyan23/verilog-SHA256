@@ -3,23 +3,27 @@
 module tb_sha256_top ();
 
   // 时钟和复位信号
-  reg             clk;
-  reg             rst_n;
+  reg clk;
+  reg rst_n;
 
-  // 模块输入
-  reg     [  7:0] data_in;
-  reg             data_in_valid;
-  reg             data_last;
+  // 输入输出信号定义
+  reg [7:0] data_in;  // 输入数据字节
+  reg data_in_valid;  // 输入数据有效标志
+  reg data_last;  // 消息结束标志
+  reg [255:0] hash_out_rebuild;  // 重建的哈希值寄存器
+  reg [7:0] test_message[0:511];  // 测试消息存储器
 
-  // 模块输出
-  wire    [255:0] hash_out;
-  wire            hash_out_valid;
-  wire            data_ready;
+  // 输出信号
+  wire data_ready;  // 模块就绪信号
+  wire hash_out_valid;  // 哈希输出有效标志
+  wire [7:0] hash_byte_out;  // 哈希值字节流输出
+  wire hash_byte_valid;  // 字节流输出有效标志
+  wire hash_byte_last;  // 字节输出结束标志
 
-  // 测试向量
-  reg     [  7:0] test_message                     [0:511];  // 测试消息存储
-  integer         message_length;  // 消息长度
-  integer         i;
+  // 控制计数器
+  integer message_length;  // 当前测试消息的总长度
+  integer message_counter;  // 消息字节计数器
+  integer byte_counter;  // 哈希字节输出计数器
 
   // 实例化被测模块
   sha256_top uut (
@@ -28,9 +32,11 @@ module tb_sha256_top ();
       .data_in(data_in),
       .data_in_valid(data_in_valid),
       .data_last(data_last),
-      .hash_out(hash_out),
       .hash_out_valid(hash_out_valid),
-      .data_ready(data_ready)
+      .hash_byte_last(hash_byte_last),
+      .data_ready(data_ready),
+      .hash_byte_out(hash_byte_out),
+      .hash_byte_valid(hash_byte_valid)
   );
 
   // 时钟生成（周期10ns）
@@ -44,7 +50,7 @@ module tb_sha256_top ();
     // =============================================
     // 测试用例1：基本功能测试 - "abc"消息
     // =============================================
-    $display("\n[TEST CASE 1] Testing 'abc' message (standard test vector)");
+    $display("\n[TEST CASE 1] Testing ---------- 'abc' (Standard)");
 
     // 测试用例1: "abc"消息 (标准SHA-256测试向量)
     test_message[0] = "a";
@@ -70,9 +76,11 @@ module tb_sha256_top ();
 
     // 发送消息
     data_in_valid = 1;
-    for (i = 0; i < message_length; i = i + 1) begin
-      data_in   = test_message[i];
-      data_last = (i == message_length - 1);
+    for (
+        message_counter = 0; message_counter < message_length; message_counter = message_counter + 1
+    ) begin
+      data_in   = test_message[message_counter];
+      data_last = (message_counter == message_length - 1);
       @(posedge clk);
     end
 
@@ -82,27 +90,41 @@ module tb_sha256_top ();
 
     // 等待哈希输出
     wait (hash_out_valid);
-    #0.1;
+
+    // 重组哈希值
+    begin
+      byte_counter = 0;
+
+      while (byte_counter < 32) begin
+        @(posedge clk);
+        if (hash_byte_valid) begin
+          hash_out_rebuild[255-byte_counter*8-:8] = hash_byte_out;
+
+          byte_counter = byte_counter + 1;
+        end
+      end
+    end
 
     // 显示结果
     $display("Final hash:");
-    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-             hash_out[159:128]);
-    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    $display("%h %h %h %h", hash_out_rebuild[255:224], hash_out_rebuild[223:192],
+             hash_out_rebuild[191:160], hash_out_rebuild[159:128]);
+    $display("%h %h %h %h", hash_out_rebuild[127:96], hash_out_rebuild[95:64],
+             hash_out_rebuild[63:32], hash_out_rebuild[31:0]);
 
     // 验证结果 (标准SHA-256("abc")结果)
-    if (hash_out === 256'hba7816bf_8f01cfea_414140de_5dae2223_b00361a3_96177a9c_b410ff61_f20015ad) begin
+    if (hash_out_rebuild === 256'hba7816bf_8f01cfea_414140de_5dae2223_b00361a3_96177a9c_b410ff61_f20015ad) begin
       $display("[RESULT] PASS");
     end else begin
       $display("[RESULT] FAIL");
       $display("Expected: ba7816bf_8f01cfea_414140de_5dae2223_b00361a3_96177a9c_b410ff61_f20015ad");
-      $display("Received: %h", hash_out);
+      $display("Received: %h", hash_out_rebuild);
     end
 
     // =============================================
     // 测试用例2：空消息测试
     // =============================================
-    $display("\n[TEST CASE 2] Testing empty message");
+    $display("\n[TEST CASE 2] Testing ---------- '' (Empty)");
 
     // 重新初始化
     #20;
@@ -128,28 +150,42 @@ module tb_sha256_top ();
 
     // 等待哈希输出
     wait (hash_out_valid);
-    #0.1;
+
+    // 重组哈希值
+    begin
+      byte_counter = 0;
+
+      while (byte_counter < 32) begin
+        @(posedge clk);
+        if (hash_byte_valid) begin
+          hash_out_rebuild[255-byte_counter*8-:8] = hash_byte_out;
+
+          byte_counter = byte_counter + 1;
+        end
+      end
+    end
 
     // 显示结果
     $display("Final hash:");
-    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-             hash_out[159:128]);
-    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    $display("%h %h %h %h", hash_out_rebuild[255:224], hash_out_rebuild[223:192],
+             hash_out_rebuild[191:160], hash_out_rebuild[159:128]);
+    $display("%h %h %h %h", hash_out_rebuild[127:96], hash_out_rebuild[95:64],
+             hash_out_rebuild[63:32], hash_out_rebuild[31:0]);
 
     // 验证结果 (标准SHA-256("")结果)
-    if (hash_out === 256'he3b0c442_98fc1c14_9afbf4c8_996fb924_27ae41e4_649b934c_a495991b_7852b855) begin
+    if (hash_out_rebuild === 256'he3b0c442_98fc1c14_9afbf4c8_996fb924_27ae41e4_649b934c_a495991b_7852b855) begin
       $display("[RESULT] PASS");
     end else begin
       $display("[RESULT] FAIL");
       $display("Expected: e3b0c442_98fc1c14_9afbf4c8_996fb924_27ae41e4_649b934c_a495991b_7852b855");
-      $display("Received: %h", hash_out);
+      $display("Received: %h", hash_out_rebuild);
     end
 
     // =============================================
     // 测试用例3：基本功能测试448 bits - "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"消息
     // =============================================
     $display(
-        "\n[TEST CASE 3] Testing 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq' message (448 bits)");
+        "\n[TEST CASE 3] Testing ---------- 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq' (448 bits)");
 
     // 测试用例3："abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"消息
     test_message[0]  = "a";
@@ -228,9 +264,11 @@ module tb_sha256_top ();
 
     // 发送消息
     data_in_valid = 1;
-    for (i = 0; i < message_length; i = i + 1) begin
-      data_in   = test_message[i];
-      data_last = (i == message_length - 1);
+    for (
+        message_counter = 0; message_counter < message_length; message_counter = message_counter + 1
+    ) begin
+      data_in   = test_message[message_counter];
+      data_last = (message_counter == message_length - 1);
       @(posedge clk);
     end
 
@@ -242,28 +280,42 @@ module tb_sha256_top ();
     wait (hash_out_valid);
     @(negedge hash_out_valid);
     wait (hash_out_valid);
-    #0.1;
+
+    // 重组哈希值
+    begin
+      byte_counter = 0;
+
+      while (byte_counter < 32) begin
+        @(posedge clk);
+        if (hash_byte_valid) begin
+          hash_out_rebuild[255-byte_counter*8-:8] = hash_byte_out;
+
+          byte_counter = byte_counter + 1;
+        end
+      end
+    end
 
     // 显示结果
     $display("Final hash:");
-    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-             hash_out[159:128]);
-    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    $display("%h %h %h %h", hash_out_rebuild[255:224], hash_out_rebuild[223:192],
+             hash_out_rebuild[191:160], hash_out_rebuild[159:128]);
+    $display("%h %h %h %h", hash_out_rebuild[127:96], hash_out_rebuild[95:64],
+             hash_out_rebuild[63:32], hash_out_rebuild[31:0]);
 
     // 验证结果
-    if (hash_out === 256'h248d6a61_d20638b8_e5c02693_0c3e6039_a33ce459_64ff2167_f6ecedd4_19db06c1) begin
+    if (hash_out_rebuild === 256'h248d6a61_d20638b8_e5c02693_0c3e6039_a33ce459_64ff2167_f6ecedd4_19db06c1) begin
       $display("[RESULT] PASS");
     end else begin
       $display("[RESULT] FAIL");
       $display("Expected: 248d6a61_d20638b8_e5c02693_0c3e6039_a33ce459_64ff2167_f6ecedd4_19db06c1");
-      $display("Received: %h", hash_out);
+      $display("Received: %h", hash_out_rebuild);
     end
 
     // =============================================
     // 测试用例4：基本功能测试896 bits - "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
     // =============================================
     $display(
-        "\n[TEST CASE 4] Testing 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu' message (896 bits)");
+        "\n[TEST CASE 4] Testing ---------- 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu' (896 bits)");
 
     // 测试用例4："abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"消息
     test_message[0] = "a";
@@ -398,9 +450,11 @@ module tb_sha256_top ();
 
     // 发送消息
     data_in_valid = 1;
-    for (i = 0; i < message_length; i = i + 1) begin
-      data_in   = test_message[i];
-      data_last = (i == message_length - 1);
+    for (
+        message_counter = 0; message_counter < message_length; message_counter = message_counter + 1
+    ) begin
+      data_in   = test_message[message_counter];
+      data_last = (message_counter == message_length - 1);
       @(posedge clk);
     end
 
@@ -412,27 +466,41 @@ module tb_sha256_top ();
     wait (hash_out_valid);
     @(negedge hash_out_valid);
     wait (hash_out_valid);
-    #0.1;
+
+    // 重组哈希值
+    begin
+      byte_counter = 0;
+
+      while (byte_counter < 32) begin
+        @(posedge clk);
+        if (hash_byte_valid) begin
+          hash_out_rebuild[255-byte_counter*8-:8] = hash_byte_out;
+
+          byte_counter = byte_counter + 1;
+        end
+      end
+    end
 
     // 显示结果
     $display("Final hash:");
-    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-             hash_out[159:128]);
-    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    $display("%h %h %h %h", hash_out_rebuild[255:224], hash_out_rebuild[223:192],
+             hash_out_rebuild[191:160], hash_out_rebuild[159:128]);
+    $display("%h %h %h %h", hash_out_rebuild[127:96], hash_out_rebuild[95:64],
+             hash_out_rebuild[63:32], hash_out_rebuild[31:0]);
 
     // 验证结果
-    if (hash_out === 256'hcf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1) begin
+    if (hash_out_rebuild === 256'hcf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1) begin
       $display("[RESULT] PASS");
     end else begin
       $display("[RESULT] FAIL");
       $display("Expected: cf5b16a7_78af8380_036ce59e_7b049237_0b249b11_e8f07a51_afac4503_7afee9d1");
-      $display("Received: %h", hash_out);
+      $display("Received: %h", hash_out_rebuild);
     end
 
     // =============================================
     // 测试用例5：基本功能测试1000 bytes - "a"*1000消息
     // =============================================
-    $display("\n[TEST CASE 5] Testing 'a'*1000 message (1000 bytes)");
+    $display("\n[TEST CASE 5] Testing ---------- 'a'*1000 (1000 bytes)");
 
     // 初始化
     #20;
@@ -452,9 +520,9 @@ module tb_sha256_top ();
 
     // 发送消息
     data_in_valid = 1;
-    for (i = 0; i < 1000; i = i + 1) begin
+    for (message_counter = 0; message_counter < 1000; message_counter = message_counter + 1) begin
       data_in   = "a";
-      data_last = (i == 1000 - 1);
+      data_last = (message_counter == 1000 - 1);
       @(posedge clk);
     end
 
@@ -472,21 +540,35 @@ module tb_sha256_top ();
     wait (hash_out_valid);
     @(negedge hash_out_valid);
     wait (hash_out_valid);
-    #0.1;
+
+    // 重组哈希值
+    begin
+      byte_counter = 0;
+
+      while (byte_counter < 32) begin
+        @(posedge clk);
+        if (hash_byte_valid) begin
+          hash_out_rebuild[255-byte_counter*8-:8] = hash_byte_out;
+
+          byte_counter = byte_counter + 1;
+        end
+      end
+    end
 
     // 显示结果
     $display("Final hash:");
-    $display("%h %h %h %h", hash_out[255:224], hash_out[223:192], hash_out[191:160],
-             hash_out[159:128]);
-    $display("%h %h %h %h", hash_out[127:96], hash_out[95:64], hash_out[63:32], hash_out[31:0]);
+    $display("%h %h %h %h", hash_out_rebuild[255:224], hash_out_rebuild[223:192],
+             hash_out_rebuild[191:160], hash_out_rebuild[159:128]);
+    $display("%h %h %h %h", hash_out_rebuild[127:96], hash_out_rebuild[95:64],
+             hash_out_rebuild[63:32], hash_out_rebuild[31:0]);
 
     // 验证结果
-    if (hash_out === 256'h41edece4_2d63e8d9_bf515a9b_a6932e1c_20cbc9f5_a5d13464_5adb5db1_b9737ea3) begin
+    if (hash_out_rebuild === 256'h41edece4_2d63e8d9_bf515a9b_a6932e1c_20cbc9f5_a5d13464_5adb5db1_b9737ea3) begin
       $display("[RESULT] PASS");
     end else begin
       $display("[RESULT] FAIL");
       $display("Expected: 41edece4_2d63e8d9_bf515a9b_a6932e1c_20cbc9f5_a5d13464_5adb5db1_b9737ea3");
-      $display("Received: %h", hash_out);
+      $display("Received: %h", hash_out_rebuild);
     end
 
     // =============================================
