@@ -144,26 +144,22 @@ module sha256_expand (
           // 检查FIFO中是否有待处理块
           if (fifo_count > 0) begin
             // 从FIFO读取下一个块
-            case (fifo_rd_ptr)
-              default: begin
-                W[0]  <= fifo[fifo_rd_ptr][511:480];
-                W[1]  <= fifo[fifo_rd_ptr][479:448];
-                W[2]  <= fifo[fifo_rd_ptr][447:416];
-                W[3]  <= fifo[fifo_rd_ptr][415:384];
-                W[4]  <= fifo[fifo_rd_ptr][383:352];
-                W[5]  <= fifo[fifo_rd_ptr][351:320];
-                W[6]  <= fifo[fifo_rd_ptr][319:288];
-                W[7]  <= fifo[fifo_rd_ptr][287:256];
-                W[8]  <= fifo[fifo_rd_ptr][255:224];
-                W[9]  <= fifo[fifo_rd_ptr][223:192];
-                W[10] <= fifo[fifo_rd_ptr][191:160];
-                W[11] <= fifo[fifo_rd_ptr][159:128];
-                W[12] <= fifo[fifo_rd_ptr][127:96];
-                W[13] <= fifo[fifo_rd_ptr][95:64];
-                W[14] <= fifo[fifo_rd_ptr][63:32];
-                W[15] <= fifo[fifo_rd_ptr][31:0];
-              end
-            endcase
+            W[0] <= fifo[fifo_rd_ptr][511:480];
+            W[1] <= fifo[fifo_rd_ptr][479:448];
+            W[2] <= fifo[fifo_rd_ptr][447:416];
+            W[3] <= fifo[fifo_rd_ptr][415:384];
+            W[4] <= fifo[fifo_rd_ptr][383:352];
+            W[5] <= fifo[fifo_rd_ptr][351:320];
+            W[6] <= fifo[fifo_rd_ptr][319:288];
+            W[7] <= fifo[fifo_rd_ptr][287:256];
+            W[8] <= fifo[fifo_rd_ptr][255:224];
+            W[9] <= fifo[fifo_rd_ptr][223:192];
+            W[10] <= fifo[fifo_rd_ptr][191:160];
+            W[11] <= fifo[fifo_rd_ptr][159:128];
+            W[12] <= fifo[fifo_rd_ptr][127:96];
+            W[13] <= fifo[fifo_rd_ptr][95:64];
+            W[14] <= fifo[fifo_rd_ptr][63:32];
+            W[15] <= fifo[fifo_rd_ptr][31:0];
             expand_counter <= 16;
             expand_active <= 1;
 
@@ -175,26 +171,22 @@ module sha256_expand (
 
       end else if (fifo_count > 0) begin
         // 当前无处理块且FIFO不为空，开始处理下一个块
-        case (fifo_rd_ptr)
-          default: begin
-            W[0]  <= fifo[fifo_rd_ptr][511:480];
-            W[1]  <= fifo[fifo_rd_ptr][479:448];
-            W[2]  <= fifo[fifo_rd_ptr][447:416];
-            W[3]  <= fifo[fifo_rd_ptr][415:384];
-            W[4]  <= fifo[fifo_rd_ptr][383:352];
-            W[5]  <= fifo[fifo_rd_ptr][351:320];
-            W[6]  <= fifo[fifo_rd_ptr][319:288];
-            W[7]  <= fifo[fifo_rd_ptr][287:256];
-            W[8]  <= fifo[fifo_rd_ptr][255:224];
-            W[9]  <= fifo[fifo_rd_ptr][223:192];
-            W[10] <= fifo[fifo_rd_ptr][191:160];
-            W[11] <= fifo[fifo_rd_ptr][159:128];
-            W[12] <= fifo[fifo_rd_ptr][127:96];
-            W[13] <= fifo[fifo_rd_ptr][95:64];
-            W[14] <= fifo[fifo_rd_ptr][63:32];
-            W[15] <= fifo[fifo_rd_ptr][31:0];
-          end
-        endcase
+        W[0] <= fifo[fifo_rd_ptr][511:480];
+        W[1] <= fifo[fifo_rd_ptr][479:448];
+        W[2] <= fifo[fifo_rd_ptr][447:416];
+        W[3] <= fifo[fifo_rd_ptr][415:384];
+        W[4] <= fifo[fifo_rd_ptr][383:352];
+        W[5] <= fifo[fifo_rd_ptr][351:320];
+        W[6] <= fifo[fifo_rd_ptr][319:288];
+        W[7] <= fifo[fifo_rd_ptr][287:256];
+        W[8] <= fifo[fifo_rd_ptr][255:224];
+        W[9] <= fifo[fifo_rd_ptr][223:192];
+        W[10] <= fifo[fifo_rd_ptr][191:160];
+        W[11] <= fifo[fifo_rd_ptr][159:128];
+        W[12] <= fifo[fifo_rd_ptr][127:96];
+        W[13] <= fifo[fifo_rd_ptr][95:64];
+        W[14] <= fifo[fifo_rd_ptr][63:32];
+        W[15] <= fifo[fifo_rd_ptr][31:0];
         expand_counter <= 16;
         expand_active <= 1;
 

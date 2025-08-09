@@ -57,7 +57,7 @@ module sha256_padding (
       temp_block     <= 0;
       data_out       <= 0;
       data_out_valid <= 0;
-      data_ready     <= 1;  // 复位时默认可接收数据
+      data_ready     <= 1;
     end else begin
       // 默认输出无效
       data_out_valid <= 0;
@@ -275,15 +275,6 @@ module sha256_padding (
             52: temp_block[95:88] <= 8'h80;
             53: temp_block[87:80] <= 8'h80;
             54: temp_block[79:72] <= 8'h80;
-            55: temp_block[71:64] <= 8'h80;
-            56: temp_block[63:56] <= 8'h80;
-            57: temp_block[55:48] <= 8'h80;
-            58: temp_block[47:40] <= 8'h80;
-            59: temp_block[39:32] <= 8'h80;
-            60: temp_block[31:24] <= 8'h80;
-            61: temp_block[23:16] <= 8'h80;
-            62: temp_block[15:8] <= 8'h80;
-            63: temp_block[7:0] <= 8'h80;
           endcase
           byte_count <= byte_count + 6'd1;
           state    <= PAD_0;
@@ -375,8 +366,13 @@ module sha256_padding (
         end
 
         default: begin
-          state <= IDLE;
-          data_ready <= 1;
+          state          <= IDLE;
+          data_length    <= 0;
+          byte_count     <= 0;
+          temp_block     <= 0;
+          data_out       <= 0;
+          data_out_valid <= 0;
+          data_ready     <= 1;
         end
       endcase
     end
